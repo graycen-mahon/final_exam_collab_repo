@@ -9,7 +9,7 @@ output:
 
 # Problem 1
 
-**Context:** Read Koontz and Simpson 2010, \"The composition of seed banks on kangaroo rat (Dipodomys spectabilis) mounds in a Chihuahuan Desert grassland.\" Journal of Arid Environments. https://doi.org/10.1016/j.jaridenv.2010.03.008\
+**Context:** Read Koontz and Simpson 2010, "The composition of seed banks on kangaroo rat (Dipodomys spectabilis) mounds in a Chihuahuan Desert grassland." Journal of Arid Environments. https://doi.org/10.1016/j.jaridenv.2010.03.008\
 **Data:** Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative.\
 https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 **Question:** How does total seed number differ between kangaroo rat mound locations?
