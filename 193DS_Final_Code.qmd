@@ -1,26 +1,58 @@
 ---
 title: "193DS_Final_Code"
+author(s): Graycen Mahon, Benise Limon, Kiya ____ (sorry idk your last name!)
 format: html
 editor: visual
 ---
 
-## Quarto
+## Introduction:
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass
+and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?". 
 
-## Running Code
+## Data Wrangling and Organization (Question 2 - seed count VS inflorescences):
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
+```{r knitr-example, eval = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+# suppress any messages from R using the code chunk above, setting messages and warnings to false}
 ```
 
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
+```{r organizing-files-using-the-here-package}
+# I always get this wrong so maybe someone else should do it lol and I will copy it
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r loading-in-packages}
+library(tidyverse)
+library(here)
+library(janitor)
+library(ggeffects)
+library(performance)
+library(naniar) 
+library(flextable)
+library(car)
+library(broom)
+library(corrplot)
+library(AICcmodavg)
+library(GGally)
+```
+
+## Question 2:  How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?
+
+```{r reading-in-the-dataset}
+individual_flower_data2 <- read_csv("shrubstudy_individual_flower_counts.ms.data.csv")
+pollinator_data2 <- read_csv("shrubstudy_pollinator.ms.data.csv")
+seed_data2 <- read_csv("shrubstudy_seed_ctwt.ms.data.csv")
+community_flower_data2 <- read_csv("shrubstudy_community_flower_counts.ms.data.csv")
+```
+
+```{r missing-data-visualization-(1-4)}
+gg_miss_var(individual_flower_data2)
+gg_miss_var(pollinator_data2)
+gg_miss_var(seed_data2)
+gg_miss_var(community_flower_data2)
+```
+
+```{r}
+
+```
+
