@@ -166,7 +166,7 @@ plot(full_log)
 
 
 ```{r}
-#Shapiro-Wilk test 
+# Shapiro-Wilk test 
 check_normality(full_log)
 # Breusch-Pagan test
 check_heteroscedasticity(full_log)
