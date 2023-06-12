@@ -44,15 +44,11 @@ library(GGally)
 ## Exercise 1
 
 ```{r read-data}
-
-```
-
-```{r read-data}
 # checking to make sure the "here" package is starting at the correct directory
 here()
 
 #reading in data set
-kangaroorat <- read_csv(here("data/sev208_kratseedbank_20120213.csv"))
+krat <- read_csv(here("data/sev208_kratseedbank_20120213.csv"))
 ```
 
 ```{r miss-vis}
@@ -65,13 +61,34 @@ gg_miss_var(krat)
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 
 ```{r model-object}
-krat_modelobject <- lm(seeds ~ mnd, data = krat)
+# create a new object called krat subset and select the columns of interest (location and seeds)
+krat_subset <- krat %>% 
+  select("loc", "seeds")
 ```
 
+```{r}
+krat_subset_summary <- krat_subset %>%
+group_by(loc) %>%
+summarize(mean_l = mean(seeds),
+sd_l = sd(seeds),
+var_l = var(seeds),
+count_l = length(seeds),
+se_l = sd_l/sqrt(count_l),
+margin_l = qt(0.975, df = count_l - 1) * se_l)
+```
 
+```{r}
+ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sample = seeds), color = "orange") + facet_wrap(~ loc)
+```
+
+mass_var <- var.test(stem_dry_mass ~ watershed, data = maples_2003, conf.level = 0.975)
+mass_var 
 
 ## Results
 
@@ -166,7 +183,10 @@ check_normality(full_log)
 check_heteroscedasticity(full_log)
 ```
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
