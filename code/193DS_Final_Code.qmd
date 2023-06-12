@@ -16,8 +16,7 @@ https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 
 ## Introduction
 
-○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5\
-sentences
+○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
 
 For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
 
@@ -66,12 +65,7 @@ gg_miss_var(krat)
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
->>>>>>> f705c2093bbd0443158f0f17252aee431e0b078b
->>>>>>> 10354bf633d95451ec2d66fa03745ef69452baef
 
 ```{r model-object}
 krat_modelobject <- lm(seeds ~ mnd, data = krat)
@@ -143,12 +137,9 @@ full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
 ```
 
 ```{r}
-<<<<<<< HEAD
 null_model <- lm(nr_seeds ~ 1, data = seed_subset)
-=======
 par(mfrow = c(2, 2))
 plot(full)
->>>>>>> 876285652f44eadd9fd371e32ef6afdd43e78ba1
 ```
 
 ```{r}
@@ -158,10 +149,6 @@ check_normality(full)
 check_heteroscedasticity(full)
 ```
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 64010fa3e31d93eb03080f57859ef537696daf73
 
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
@@ -173,22 +160,13 @@ plot(full_log)
 
 
 ```{r}
-<<<<<<< HEAD
-#Shapiro-Wilk test 
-=======
 # Shapiro-Wilk test 
->>>>>>> 64010fa3e31d93eb03080f57859ef537696daf73
 check_normality(full_log)
 # Breusch-Pagan test
 check_heteroscedasticity(full_log)
 ```
 
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> f763bbac2c62cc5f0cb063a5223bf13173f318ba
->>>>>>> 64010fa3e31d93eb03080f57859ef537696daf73
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
