@@ -1,6 +1,6 @@
 ---
 title: "193DS_Final_Code"
-author(s): Graycen Mahon, Benise Limon, Kiya Pupa
+authors: Graycen Mahon, Benise Limon, Kiya Pupa
 data: "2023-06-12"
 output:
   html_document:
@@ -85,10 +85,10 @@ community <- read_csv(here("data/shrubstudy_community_flower_counts.ms.data.csv"
 ```
 
 ```{r missing-data-visualization-(1-4)}
-gg_miss_var(individual_flower_data2)
-gg_miss_var(pollinator_data2)
-gg_miss_var(seed_data2)
-gg_miss_var(community_flower_data2)
+gg_miss_var(individual)
+gg_miss_var(pollinator)
+gg_miss_var(seed)
+gg_miss_var(community)
 ```
 
 ```{r Species-checking-assumptions-seed-data2}
