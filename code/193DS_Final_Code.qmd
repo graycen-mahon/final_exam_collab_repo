@@ -22,10 +22,9 @@ sentences
 For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
 
 ## Methods
-
-○ Any cleaning and wrangling steps\
-○ Assumption checks\
-○ Statistical tests and null hypotheses\
+○ Any cleaning and wrangling steps
+○ Assumption checks
+○ Statistical tests and null hypotheses
 ○ Citations for packages, software, data, or other steps
 
 ```{r loading-in-packages1}
@@ -43,12 +42,18 @@ library(AICcmodavg)
 library(GGally)
 ```
 
+## Exercise 1
+
+```{r read-data}
+
+```
+
 ```{r read-data}
 # checking to make sure the "here" package is starting at the correct directory
 here()
 
 #reading in data set
-krat <- read_csv(here("data/sev208_kratseedbank_20120213.csv"))
+kangaroorat <- read_csv(here("data/sev208_kratseedbank_20120213.csv"))
 ```
 
 ```{r miss-vis}
@@ -61,27 +66,12 @@ gg_miss_var(krat)
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> f705c2093bbd0443158f0f17252aee431e0b078b
 
 ```{r model-object}
 krat_modelobject <- lm(seeds ~ mnd, data = krat)
 ```
 
-```{r plot-assumptions}
-# makes the viewer pane show a 2x2 grid of plots
-# format: par(mfrow = c(number of rows, number of columns))
-par(mfrow = c(2, 2))
-plot(krat_modelobject)
-```
 
-```{r dev-off}
-# turns off the 2x2 grid - pop this under the code chunk where you set the 2x2 grid
-dev.off()
-```
 
 ## Results
 
