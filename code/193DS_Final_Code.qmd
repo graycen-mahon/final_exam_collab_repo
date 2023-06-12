@@ -57,7 +57,7 @@ gg_miss_var(krat)
 #nothing missing!
 ```
 
-```{r assumption-checks}
+```{r explore-data}
 
 ```
 
@@ -117,19 +117,27 @@ seed_subset <- seed %>%
   drop_na(nr_seeds)
 ```
 
-```{r Species-checking-assumptions-seed-data2}
+```{r model-object-species}
 seed_model_object <-lm(nr_seeds ~ species, data = seed_subset)
 plot(seed_model_object)
 ```
 
-```{r Inflorescences-checking-assumption-seed-data2}
+```{r model-object-inflorescences}
 seed_model_object2 <-lm(nr_seeds ~ total_nr_infl, data = seed_subset)
 plot(seed_model_object2)
 ```
 
-```{r Plot-type-checking-assumptions-seed-data2}
+```{r model-object-treatment}
 seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_subset)
 plot(seed_model_object3)
+```
+
+```{r explore-data-species}
+ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
+```
+
+```{r explore-data-inflorescences}
+ggplot(data = seed_subset, aes(x = nr_seeds, y = total_nr_infl), na.rm = TRUE) + geom_col()
 ```
 
 ## Results
