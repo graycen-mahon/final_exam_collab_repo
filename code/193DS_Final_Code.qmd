@@ -61,8 +61,11 @@ gg_miss_var(krat)
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> f705c2093bbd0443158f0f17252aee431e0b078b
 
 ```{r model-object}
 krat_modelobject <- lm(mnd ~ seeds, data = krat)
@@ -112,43 +115,35 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 ```{r reading-in-the-dataset}
 #reading in the datasets for problem 2
-individual <- read_csv(here("data/shrubstudy_individual_flower_counts.ms.data.csv"))
-pollinator <- read_csv(here("data/shrubstudy_pollinator.ms.data.csv"))
 seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
-community <- read_csv(here("data/shrubstudy_community_flower_counts.ms.data.csv"))
 ```
 
 ```{r cleaning-the-data}
 seed %>% 
   clean_names() %>% 
+# 
   select(species, treatment, nr_seeds, total_nr_infl)
 ```
 
 ```{r missing-data-visualization-(1-4)}
-gg_miss_var(individual)
-gg_miss_var(pollinator)
+# visualizing miss data points
 gg_miss_var(seed)
-gg_miss_var(community)
 ```
 
 ```{r}
+# creating a seed subset object and dropping na values from the table
 seed_subset <- seed %>% 
   drop_na(nr_seeds)
 ```
 
+```{r}
+null_model <- lm(nr_seeds, data = seed_subset)
+plot(seed_subset)
+```
+
 ```{r model-object-species}
-seed_model_object <-lm(nr_seeds ~ species, data = seed_subset)
+seed_model_object <-lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
 plot(seed_model_object)
-```
-
-```{r model-object-inflorescences}
-seed_model_object2 <-lm(nr_seeds ~ total_nr_infl, data = seed_subset)
-plot(seed_model_object2)
-```
-
-```{r model-object-treatment}
-seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_subset)
-plot(seed_model_object3)
 ```
 
 ```{r explore-data-species}
