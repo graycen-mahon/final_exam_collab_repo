@@ -158,6 +158,10 @@ check_normality(full)
 check_heteroscedasticity(full)
 ```
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 64010fa3e31d93eb03080f57859ef537696daf73
 
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
@@ -169,13 +173,22 @@ plot(full_log)
 
 
 ```{r}
+<<<<<<< HEAD
 #Shapiro-Wilk test 
+=======
+# Shapiro-Wilk test 
+>>>>>>> 64010fa3e31d93eb03080f57859ef537696daf73
 check_normality(full_log)
 # Breusch-Pagan test
 check_heteroscedasticity(full_log)
 ```
 
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> f763bbac2c62cc5f0cb063a5223bf13173f318ba
+>>>>>>> 64010fa3e31d93eb03080f57859ef537696daf73
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
