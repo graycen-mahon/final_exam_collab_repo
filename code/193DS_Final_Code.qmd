@@ -57,8 +57,25 @@ gg_miss_var(krat)
 #nothing missing!
 ```
 
-```{r assumption-checks}
+```{r explore-data}
+ggplot(data = krat, aes(x = mnd, y = seeds)) +
+  geom_col()
+```
 
+```{r model-object}
+krat_modelobject <- lm(mnd ~ seeds, data = krat)
+```
+
+```{r plot-assumptions}
+# makes the viewer pane show a 2x2 grid of plots
+# format: par(mfrow = c(number of rows, number of columns))
+par(mfrow = c(2, 2))
+plot(krat_modelobject)
+```
+
+```{r dev-off}
+# turns off the 2x2 grid - pop this under the code chunk where you set the 2x2 grid
+dev.off()
 ```
 
 ## Results
