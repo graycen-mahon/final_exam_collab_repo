@@ -1,8 +1,10 @@
 ---
 title: "193DS_Final_Code"
-author(s): Graycen Mahon, Benise Limon, Kiya ____ (sorry idk your last name!)
-format: html
-editor: visual
+author(s): Graycen Mahon, Benise Limon, Kiya Pupa
+data: "2023-06-12"
+output:
+  html_document:
+    code_folding: hide
 ---
 
 ## Introduction:
@@ -52,7 +54,18 @@ gg_miss_var(seed_data2)
 gg_miss_var(community_flower_data2)
 ```
 
-```{r}
+```{r Species-checking-assumptions-seed-data2}
+seed_model_object <-lm(nr_seeds ~ species, data = seed_data2)
+plot(seed_model_object)
+```
 
+```{r Inflorescences-checking-assumption-seed-data2}
+seed_model_object2 <-lm(nr_seeds ~ total_nr_infl, data = seed_data2)
+plot(seed_model_object2)
+```
+
+```{r Plot-type-checking-assumptions-seed-data2}
+seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_data2)
+plot(seed_model_object3)
 ```
 
