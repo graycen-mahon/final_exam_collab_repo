@@ -22,10 +22,9 @@ sentences
 For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
 
 ## Methods
-
-○ Any cleaning and wrangling steps\
-○ Assumption checks\
-○ Statistical tests and null hypotheses\
+○ Any cleaning and wrangling steps
+○ Assumption checks
+○ Statistical tests and null hypotheses
 ○ Citations for packages, software, data, or other steps
 
 ```{r loading-in-packages1}
@@ -43,12 +42,18 @@ library(AICcmodavg)
 library(GGally)
 ```
 
+## Exercise 1
+
+```{r read-data}
+
+```
+
 ```{r read-data}
 # checking to make sure the "here" package is starting at the correct directory
 here()
 
 #reading in data set
-krat <- read_csv(here("data/sev208_kratseedbank_20120213.csv"))
+kangaroorat <- read_csv(here("data/sev208_kratseedbank_20120213.csv"))
 ```
 
 ```{r miss-vis}
@@ -61,22 +66,18 @@ gg_miss_var(krat)
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+>>>>>>> f705c2093bbd0443158f0f17252aee431e0b078b
+>>>>>>> 10354bf633d95451ec2d66fa03745ef69452baef
 
 ```{r model-object}
-krat_modelobject <- lm(mnd ~ seeds, data = krat)
+krat_modelobject <- lm(seeds ~ mnd, data = krat)
 ```
 
-```{r plot-assumptions}
-# makes the viewer pane show a 2x2 grid of plots
-# format: par(mfrow = c(number of rows, number of columns))
-par(mfrow = c(2, 2))
-plot(krat_modelobject)
-```
 
-```{r dev-off}
-# turns off the 2x2 grid - pop this under the code chunk where you set the 2x2 grid
-dev.off()
-```
 
 ## Results
 
@@ -130,16 +131,50 @@ gg_miss_var(seed)
 # creating a seed subset object and dropping na values from the table
 seed_subset <- seed %>% 
   drop_na(nr_seeds)
+
+gg_miss_var(seed_subset)
+```
+
+```{r null-and-full-models}
+# null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
+null <- lm(nr_seeds ~ 1, data = seed_subset)
+# full models includes all variables to assess a linear relationship between each predictor variable and seeds
+full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
 ```
 
 ```{r}
+<<<<<<< HEAD
 null_model <- lm(nr_seeds ~ 1, data = seed_subset)
+=======
+par(mfrow = c(2, 2))
+plot(full)
+>>>>>>> 876285652f44eadd9fd371e32ef6afdd43e78ba1
 ```
 
-```{r model-object-species}
-seed_model_object <-lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
-plot(seed_model_object)
+```{r}
+#Shapiro-Wilk test 
+check_normality(full)
+# Breusch-Pagan test
+check_heteroscedasticity(full)
 ```
+
+
+```{r}
+# create a new model taking the log of the relationship between total mass and species type
+full_log <- lm(log(nr_seeds) ~ species + total_nr_infl + treatment, data = seed_subset)
+#plotting to visually assess normality and homoscedasticity
+par(mfrow = c(2, 2))
+plot(full_log)
+```
+
+
+```{r}
+#Shapiro-Wilk test 
+check_normality(full_log)
+# Breusch-Pagan test
+check_heteroscedasticity(full_log)
+```
+
 
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
