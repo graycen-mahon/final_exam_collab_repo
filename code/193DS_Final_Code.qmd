@@ -63,8 +63,6 @@ ggplot(data = krat, aes(x = mnd, y = seeds)) +
 ```
 <<<<<<< HEAD
 
-=======
-=======
 >>>>>>> f705c2093bbd0443158f0f17252aee431e0b078b
 
 ```{r model-object}
@@ -133,7 +131,9 @@ gg_miss_var(seed)
 ```{r}
 # creating a seed subset object and dropping na values from the table
 seed_subset <- seed %>% 
-  drop_na(nr_seeds, nr_infl_coll)
+  drop_na(nr_seeds)
+
+gg_miss_var(seed_subset)
 ```
 
 ```{r null-and-full-models}
@@ -155,10 +155,6 @@ check_normality(full)
 check_heteroscedasticity(full)
 ```
 
-```{r}
-seed_new <- data                                     # Duplicate data
-data_new[is.na(data_new) | data_new == "Inf"] <- NA  # Replace NaN & Inf with NA
-```
 
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
@@ -167,6 +163,15 @@ full_log <- lm(log(nr_seeds) ~ species + total_nr_infl + treatment, data = seed_
 par(mfrow = c(2, 2))
 plot(full_log)
 ```
+
+
+```{r}
+#Shapiro-Wilk test 
+check_normality(full_log)
+# Breusch-Pagan test
+check_heteroscedasticity(full_log)
+```
+
 
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
