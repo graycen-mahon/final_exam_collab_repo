@@ -106,6 +106,7 @@ seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_data2)
 plot(seed_model_object3)
 ```
 
+
 ## Results
 
 ○ Interpretation of main results in the context of the system\
