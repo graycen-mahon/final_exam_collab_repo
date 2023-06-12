@@ -58,12 +58,11 @@ gg_miss_var(krat)
 ```
 
 ```{r explore-data}
-<<<<<<< HEAD
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
+
 =======
->>>>>>> 4e1ce07386f543af409e4bf2d5b64c09ee34ee64
 
 ```{r model-object}
 krat_modelobject <- lm(mnd ~ seeds, data = krat)
