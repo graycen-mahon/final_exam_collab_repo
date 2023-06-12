@@ -98,6 +98,8 @@ sentences
 
 ## Methods
 
+  For the second problem, we began by reading in the csv file and naming a new object called seed. In order to 
+
 ○ Any cleaning and wrangling steps\
 ○ Assumption checks\
 ○ Statistical tests and null hypotheses\
@@ -109,14 +111,13 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 ```{r reading-in-the-dataset}
-#reading in the datasets for problem 2
+#reading in the data sets for problem 2
 seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 ```
 
 ```{r cleaning-the-data}
 seed %>% 
   clean_names() %>% 
-# 
   select(species, treatment, nr_seeds, total_nr_infl)
 ```
 
@@ -132,8 +133,7 @@ seed_subset <- seed %>%
 ```
 
 ```{r}
-null_model <- lm(nr_seeds, data = seed_subset)
-plot(seed_subset)
+null_model <- lm(nr_seeds ~ 1, data = seed_subset)
 ```
 
 ```{r model-object-species}
