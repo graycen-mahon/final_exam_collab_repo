@@ -7,11 +7,51 @@ output:
     code_folding: hide
 ---
 
-## Introduction:
+# Problem 1
+
+**Context:** Read Koontz and Simpson 2010, \"The composition of seed banks on kangaroo rat (Dipodomys spectabilis) mounds in a Chihuahuan Desert grassland.\" Journal of Arid Environments. https://doi.org/10.1016/j.jaridenv.2010.03.008\
+**Data:** Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative.\
+https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
+**Question:** How does total seed number differ between kangaroo rat mound locations?
+
+## Introduction
+
+○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5\
+sentences
 
 For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
 
-## Data Wrangling and Organization (Question 2 - seed count VS inflorescences):
+## Methods
+
+○ Any cleaning and wrangling steps\
+○ Assumption checks\
+○ Statistical tests and null hypotheses\
+○ Citations for packages, software, data, or other steps
+
+## Results
+
+○ Interpretation of main results in the context of the system\
+○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.\
+○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption\
+○ A table (if appropriate) with a caption
+
+# Problem 2
+
+**Data:** Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator\
+visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9\
+**Questions:** How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?
+
+## Introduction
+
+○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5\
+sentences
+
+## Methods
+
+○ Any cleaning and wrangling steps\
+○ Assumption checks\
+○ Statistical tests and null hypotheses\
+○ Citations for packages, software, data, or other steps
 
 ```{r knitr-example, eval = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
@@ -37,8 +77,6 @@ library(AICcmodavg)
 library(GGally)
 ```
 
-## Question 2: How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?
-
 ```{r reading-in-the-dataset}
 individual_flower_data2 <- read_csv("shrubstudy_individual_flower_counts.ms.data.csv")
 pollinator_data2 <- read_csv("shrubstudy_pollinator.ms.data.csv")
@@ -58,8 +96,6 @@ seed_model_object <-lm(nr_seeds ~ species, data = seed_data2)
 plot(seed_model_object)
 ```
 
-\<\<\<\<\<\<\< HEAD
-
 ```{r Inflorescences-checking-assumption-seed-data2}
 seed_model_object2 <-lm(nr_seeds ~ total_nr_infl, data = seed_data2)
 plot(seed_model_object2)
@@ -70,4 +106,9 @@ seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_data2)
 plot(seed_model_object3)
 ```
 
-# 
+## Results
+
+○ Interpretation of main results in the context of the system\
+○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.\
+○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption\
+○ A table (if appropriate) with a caption
