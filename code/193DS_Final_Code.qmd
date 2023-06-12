@@ -84,6 +84,12 @@ seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 community <- read_csv(here("data/shrubstudy_community_flower_counts.ms.data.csv"))
 ```
 
+```{r cleaning-the-data}
+seed %>% 
+  clean_names() %>% 
+  select(species, treatment, nr_seeds, total_nr_infl)
+```
+
 ```{r missing-data-visualization-(1-4)}
 gg_miss_var(individual)
 gg_miss_var(pollinator)
@@ -91,18 +97,23 @@ gg_miss_var(seed)
 gg_miss_var(community)
 ```
 
+```{r}
+seed_subset <- seed %>% 
+  drop_na(nr_seeds)
+```
+
 ```{r Species-checking-assumptions-seed-data2}
-seed_model_object <-lm(nr_seeds ~ species, data = seed_data2)
+seed_model_object <-lm(nr_seeds ~ species, data = seed_subset)
 plot(seed_model_object)
 ```
 
 ```{r Inflorescences-checking-assumption-seed-data2}
-seed_model_object2 <-lm(nr_seeds ~ total_nr_infl, data = seed_data2)
+seed_model_object2 <-lm(nr_seeds ~ total_nr_infl, data = seed_subset)
 plot(seed_model_object2)
 ```
 
 ```{r Plot-type-checking-assumptions-seed-data2}
-seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_data2)
+seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_subset)
 plot(seed_model_object3)
 ```
 
