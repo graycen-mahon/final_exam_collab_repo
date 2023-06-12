@@ -57,7 +57,8 @@ gg_miss_var(community_flower_data2)
 seed_model_object <-lm(nr_seeds ~ species, data = seed_data2)
 plot(seed_model_object)
 ```
-<<<<<<< HEAD
+
+\<\<\<\<\<\<\< HEAD
 
 ```{r Inflorescences-checking-assumption-seed-data2}
 seed_model_object2 <-lm(nr_seeds ~ total_nr_infl, data = seed_data2)
@@ -69,5 +70,4 @@ seed_model_object3 <-lm(nr_seeds ~ treatment, data = seed_data2)
 plot(seed_model_object3)
 ```
 
-# i need to commit again
-
+# 
