@@ -58,13 +58,9 @@ gg_miss_var(krat)
 ```
 
 ```{r explore-data}
-ggplot(data = krat, aes(x = mnd, y = seeds)) +
+ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
-<<<<<<< HEAD
-
-=======
->>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 
 ```{r model-object}
 # create a new object called krat subset and select the columns of interest (location and seeds)
