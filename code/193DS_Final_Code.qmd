@@ -61,12 +61,9 @@ gg_miss_var(krat)
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
-<<<<<<< HEAD
-
->>>>>>> f705c2093bbd0443158f0f17252aee431e0b078b
 
 ```{r model-object}
-krat_modelobject <- lm(seeds ~ mnd, data = krat)
+krat_modelobject <- lm(mnd ~ seeds, data = krat)
 ```
 
 ```{r plot-assumptions}
@@ -101,6 +98,8 @@ sentences
 
 ## Methods
 
+  For the second problem, we began by reading in the csv file and naming a new object called seed. In order to 
+
 ○ Any cleaning and wrangling steps\
 ○ Assumption checks\
 ○ Statistical tests and null hypotheses\
@@ -112,14 +111,13 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 ```{r reading-in-the-dataset}
-#reading in the datasets for problem 2
+#reading in the data sets for problem 2
 seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 ```
 
 ```{r cleaning-the-data}
 seed %>% 
   clean_names() %>% 
-# 
   select(species, treatment, nr_seeds, total_nr_infl)
 ```
 
@@ -132,29 +130,18 @@ gg_miss_var(seed)
 # creating a seed subset object and dropping na values from the table
 seed_subset <- seed %>% 
   drop_na(nr_seeds)
-
-gg_miss_var(seed_subset)
-```
-
-```{r null-and-full-models}
-# null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
-null <- lm(nr_seeds ~ 1, data = seed_subset)
-# full models includes all variables to assess a linear relationship between each predictor variable and seeds
-full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
 ```
 
 ```{r}
-par(mfrow = c(2, 2))
-plot(full)
+null_model <- lm(nr_seeds ~ 1, data = seed_subset)
 ```
 
-```{r}
-#Shapiro-Wilk test 
-check_normality(full)
-# Breusch-Pagan test
-check_heteroscedasticity(full)
+```{r model-object-species}
+seed_model_object <-lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
+plot(seed_model_object)
 ```
 
+<<<<<<< HEAD
 
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
@@ -173,6 +160,8 @@ check_heteroscedasticity(full_log)
 ```
 
 
+=======
+>>>>>>> f763bbac2c62cc5f0cb063a5223bf13173f318ba
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```

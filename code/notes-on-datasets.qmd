@@ -7,61 +7,67 @@ editor: visual
 ## Question: How does the total seed number differ between kangaroo rat mound locations?
 
 # Article: The composition of seed banks on kangaroo rat mounds in a Chihuahuan Desert grassland
-- The seed bank of this plant allows for their persistence in unpredictable environments
-- They studied composition of seed bank for 8 forb taxa on and off kangaroo rat mounds
-    - These mounds accumulated more seeds and supported different seed compositions than the adjacent grassland
-    - Mounds had different microhabitats than areas away from the mound
-        - Suggests that these mounds facilitate some plant species by providing safe sites for seeds to accumulate where adult plant populations can establish and colonize, thus increasing plant diversity and altering plant structure in communities
+
+-   The seed bank of this plant allows for their persistence in unpredictable environments
+-   They studied composition of seed bank for 8 forb taxa on and off kangaroo rat mounds
+    -   These mounds accumulated more seeds and supported different seed compositions than the adjacent grassland
+    -   Mounds had different microhabitats than areas away from the mound
+        -   Suggests that these mounds facilitate some plant species by providing safe sites for seeds to accumulate where adult plant populations can establish and colonize, thus increasing plant diversity and altering plant structure in communities
 
 # Introduction:
-    - Perennial species often have short lived seed banks
-    - Annual plants have long lived seed banks
-    - Seed germination can be primarily maintained below ground
-        - Important for species in the deserts of southwestern North America where banks are preserved below ground for drought tolerance
-    -  annual plant cover is higher on mounds than off mounds
-    - soil on the mounds had higher concentration of nitrogen, lower water availability after rainfall than non-mound soil
-    - kR activity affects seed banks in many ways:
-        - mounds have a wide variety of plant species that drop their seeds close to "home" and therefore deposit a large proportion of their seeds into the seed bank in the mound.
-        - KR seed caching and selective foraging can change seed distributions and densities in plant communities
-    - they surveyed parts of the see band in the Chihuahuan desert grassland to understand the impact of banner tail KR mounds on plant communities
-    - they predicted that the 8 plant taxa will have seeds banks that differ between mounds and also off mounds. Mounds will have high seed numbers of early successional plant species. 
+
+```         
+- Perennial species often have short lived seed banks
+- Annual plants have long lived seed banks
+- Seed germination can be primarily maintained below ground
+    - Important for species in the deserts of southwestern North America where banks are preserved below ground for drought tolerance
+-  annual plant cover is higher on mounds than off mounds
+- soil on the mounds had higher concentration of nitrogen, lower water availability after rainfall than non-mound soil
+- kR activity affects seed banks in many ways:
+    - mounds have a wide variety of plant species that drop their seeds close to "home" and therefore deposit a large proportion of their seeds into the seed bank in the mound.
+    - KR seed caching and selective foraging can change seed distributions and densities in plant communities
+- they surveyed parts of the see band in the Chihuahuan desert grassland to understand the impact of banner tail KR mounds on plant communities
+- they predicted that the 8 plant taxa will have seeds banks that differ between mounds and also off mounds. Mounds will have high seed numbers of early successional plant species. 
+```
 
 # Study Site
-- Sevilleta National Wildlife Refuge Long-term Ecological Research (LTER) cite in Socorro County in central New Mexico ( latitude 34°18′50″N, longitude 106°42′36″W). 
-- located along a transition zone among several biomes: Great Plains Grassland, Colorado Plateau Shrub Steppe, Conifer Woodland, and Chihuahuan Desert
+
+-   Sevilleta National Wildlife Refuge Long-term Ecological Research (LTER) cite in Socorro County in central New Mexico ( latitude 34°18′50″N, longitude 106°42′36″W).
+-   located along a transition zone among several biomes: Great Plains Grassland, Colorado Plateau Shrub Steppe, Conifer Woodland, and Chihuahuan Desert
 
 # Results
-- avg total number of seeds differed significantly among mound locations
-- extracted 10,658 seeds of the eight target taxa: 9,269 from mounds and 1389 seeds off mounds
-- The base had significantly more seeds (n = 6662) than all other mound locations, and surrounding mound areas had significantly more seeds (n = 2607) than both off mound locations
 
-Citation: 
-Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative. https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597 (Accessed 2023-06-10).
+-   avg total number of seeds differed significantly among mound locations
+-   extracted 10,658 seeds of the eight target taxa: 9,269 from mounds and 1389 seeds off mounds
+-   The base had significantly more seeds (n = 6662) than all other mound locations, and surrounding mound areas had significantly more seeds (n = 2607) than both off mound locations
 
+Citation: Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative. https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597 (Accessed 2023-06-10).
 
 ## Questions: How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?
 
-Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge (2019-2021) 
+Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge (2019-2021)
 
 # Introduction:
-- "shrubification"- result of climate change in alpine tundra
-- through to change micro climatic conditions, potentially leading to changes in plant community composition
-- Niwot Ridge Long Term Ecological Research site in the mountains of colorado
-    - experiencing this shrubification for 40 years
-- important aspect of plant resporductive success:
-    - timing of flowering, known as flowering phenology
-    - controlled by env conditions
-    
+
+-   "shrubification"- result of climate change in alpine tundra
+-   through to change micro climatic conditions, potentially leading to changes in plant community composition
+-   Niwot Ridge Long Term Ecological Research site in the mountains of colorado
+    -   experiencing this shrubification for 40 years
+-   important aspect of plant resporductive success:
+    -   timing of flowering, known as flowering phenology
+    -   controlled by env conditions
+
 # Method
-- exploring 21 plant species in the community
-  - taken place over 3 years
-      - monitor flower numbers present in 54 pairs of shrub influenced and ppen plots (108 plots total)
-- took seeds from these five species from 12 pairs of shrub and open plots, totaling 24 plots
-- counted and weighed the seeds to determine reproductive success
+
+-   exploring 21 plant species in the community
+    -   taken place over 3 years
+        -   monitor flower numbers present in 54 pairs of shrub influenced and ppen plots (108 plots total)
+-   took seeds from these five species from 12 pairs of shrub and open plots, totaling 24 plots
+-   counted and weighed the seeds to determine reproductive success
 
 # Results
-- found that there is no difference in the flowering phenology between open and shrub-influenced plots
-- is a measurable difference in the number of flowers produced between shrub and open plots, with open plots having more flowers on average, This difference is likely due to there being fewer plants in shrub-influenced plots.
 
-Citation: 
-Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10). 
+-   found that there is no difference in the flowering phenology between open and shrub-influenced plots
+-   is a measurable difference in the number of flowers produced between shrub and open plots, with open plots having more flowers on average, This difference is likely due to there being fewer plants in shrub-influenced plots.
+
+Citation: Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10).
