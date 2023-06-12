@@ -128,8 +128,9 @@ gg_miss_var(seed)
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-seed_subset <- seed %>% 
-  drop_na(nr_seeds)
+seed_subset <- seed
+seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
+#seed_subset[drop_na(nr_seeds)]
 ```
 
 ```{r}
