@@ -68,7 +68,7 @@ ggplot(data = krat, aes(x = mnd, y = seeds)) +
 >>>>>>> f705c2093bbd0443158f0f17252aee431e0b078b
 
 ```{r model-object}
-krat_modelobject <- lm(mnd ~ seeds, data = krat)
+krat_modelobject <- lm(seeds ~ mnd, data = krat)
 ```
 
 ```{r plot-assumptions}
@@ -133,17 +133,39 @@ gg_miss_var(seed)
 ```{r}
 # creating a seed subset object and dropping na values from the table
 seed_subset <- seed %>% 
-  drop_na(nr_seeds)
+  drop_na(nr_seeds, nr_infl_coll)
+```
+
+```{r null-and-full-models}
+# null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
+null <- lm(nr_seeds ~ 1, data = seed_subset)
+# full models includes all variables to assess a linear relationship between each predictor variable and seeds
+full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
 ```
 
 ```{r}
-null_model <- lm(nr_seeds, data = seed_subset)
-plot(seed_subset)
+par(mfrow = c(2, 2))
+plot(full)
 ```
 
-```{r model-object-species}
-seed_model_object <-lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
-plot(seed_model_object)
+```{r}
+#Shapiro-Wilk test 
+check_normality(full)
+# Breusch-Pagan test
+check_heteroscedasticity(full)
+```
+
+```{r}
+seed_new <- data                                     # Duplicate data
+data_new[is.na(data_new) | data_new == "Inf"] <- NA  # Replace NaN & Inf with NA
+```
+
+```{r}
+# create a new model taking the log of the relationship between total mass and species type
+full_log <- lm(log(nr_seeds) ~ species + total_nr_infl + treatment, data = seed_subset)
+#plotting to visually assess normality and homoscedasticity
+par(mfrow = c(2, 2))
+plot(full_log)
 ```
 
 ```{r explore-data-species}
