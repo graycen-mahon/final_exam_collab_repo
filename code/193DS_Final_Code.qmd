@@ -43,6 +43,24 @@ library(AICcmodavg)
 library(GGally)
 ```
 
+```{r read-data}
+# checking to make sure the "here" package is starting at the correct directory
+here()
+
+#reading in data set
+krat <- read_csv(here("data/sev208_kratseedbank_20120213.csv"))
+```
+
+```{r miss-vis}
+#visualizing missing observations
+gg_miss_var(krat)
+#nothing missing!
+```
+
+```{r assumption-checks}
+
+```
+
 ## Results
 
 ○ Interpretation of main results in the context of the system\
@@ -74,9 +92,6 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 ```{r reading-in-the-dataset}
-# checking to make sure the "here" package is starting at the correct directory
-here()
-
 #reading in the datasets for problem 2
 individual <- read_csv(here("data/shrubstudy_individual_flower_counts.ms.data.csv"))
 pollinator <- read_csv(here("data/shrubstudy_pollinator.ms.data.csv"))
