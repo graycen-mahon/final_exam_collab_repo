@@ -4,14 +4,8 @@ format: html
 editor: visual
 ---
 
-## poisson test attempt
-```{r}
-poisson.test(1560, T = 4, r = 1,
-    conf.level = 0.95)
-```
-## end poisson test attempt
-
 ## problem two original attempt
+
 ```{r knitr-example, eval = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 # suppress any messages from R using the code chunk above, setting messages and warnings to false}
@@ -158,4 +152,5 @@ table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>%
 #show table 
   table
 ```
+
 ## end prob two original attempt

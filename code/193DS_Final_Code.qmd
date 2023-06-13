@@ -77,22 +77,22 @@ ggplot(data = krat, aes(x = loc, y = seeds)) +
 ```{r model-object}
 # create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
-  dplyr::select("loc", "seeds") 
+  dplyr::select("loc", "seeds")
 ```
+
 
 ```{r data-summary}
 # create a summary subset of the krat data grouped by location
 # calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
 krat_subset_summary <- krat_subset %>%
-group_by(loc) %>%
-summarize(
-  mean = mean(seeds),
-  median = median(seeds),
-  sd = sd(seeds),
-  var = var(seeds),
-  count = length(seeds),
-  se = sd/sqrt(count),
-  margin = qt(0.975, df = count - 1) * se)
+group_by(loc) %>% 
+  mean = mean(seeds)
+  median = median(seeds)
+  sd = sd(seeds)
+  var = var(seeds)
+  count = length(seeds)
+  se = sd/sqrt(count)
+  margin = qt(0.975, df = count - 1) * se
 
 krat_subset_summary
 ```
@@ -105,42 +105,20 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
-<<<<<<< HEAD
-Poisson Test
-=======
-<<<<<<< HEAD
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
-=======
-Poisson 
->>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
-
-```{r poisson-test}
-rpois(1560, )
-```
-
-Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
-
-```{r kruskal-test}
-<<<<<<< HEAD
-# Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test 
-=======
 # Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
-<<<<<<< HEAD
-=======
->>>>>>> ecb47ed641eccec35df6d93bba4fe3ef724f5a41
->>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
-# Perform Kruskal-Wallis test
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
-
 
 ```{r eta-squared}
 # Comparison of ranks for Kruskal Wallis based on H statistic
 rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 small effect size (0.0122)
+
+
 
 
 ## Results
@@ -210,7 +188,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 seed_1 <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 ```
 
-```{r}
+```{r missing-data-visualization}
 gg_miss_var(seed_1) +
   labs(caption = "Missing Data in the Seed Dataset") +
   theme(plot.caption = element_text(hjust = 0.6))
@@ -218,7 +196,7 @@ gg_miss_var(seed_1) +
 skim(seed_1)
 ```
 
-```{r}
+```{r making-a-ggpairs-plot}
 seed_1 %>% 
   dplyr::select(!species) %>% 
   ggpairs()
@@ -226,7 +204,7 @@ seed_1 %>%
 ```
 
 
-```{r}
+```{r cleaning-up-the-data}
 #cleaning and sub-setting data
 #selecting columns to have in data frame
 seed_subset1 <- seed_1 %>%
@@ -252,7 +230,7 @@ seed_col3 <- seed_col2 %>%
 seed_col3
 ```
 
-```{r}
+```{r data-visualization}
 ggplot(seed_col1, aes(x = nr_seeds)) +
   geom_histogram(bins = 7)
 ```
@@ -282,59 +260,47 @@ seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_inf
 #error for last few models, need numeric data?
 ```
 
-```{r}
+```{r checking-for-normality-and-herterosked-in-the-linerar-model}
 check_normality(seed_mod1)
 check_heteroscedasticity(seed_mod1)
-
-check_normality(seed_mod2)
-check_heteroscedasticity(seed_mod2)
-
-check_normality(seed_mod3)
-check_heteroscedasticity(seed_mod3)
-
-check_normality(seed_mod4)
-check_heteroscedasticity(seed_mod4)
-
-check_normality(seed_mod5)
-check_heteroscedasticity(seed_mod5)
 ```
 
 Look at Residuals
-```{r diagnostics}
+```{r diagnostics-model-2}
 plot(simulateResiduals(seed_mod2))
 ```
 
-```{r}
+```{r diagnostics-model-3}
 plot(simulateResiduals(seed_mod3))
 ```
 
-```{r}
+```{r diagnostics-model-4}
 plot(simulateResiduals(seed_mod4))
 ```
 
-```{r}
+```{r diagnostics-model-5}
 plot(simulateResiduals(seed_mod5))
 ```
 
-```{r}
-plot(simulateResiduals(seed_mod55))
+```{r diagnostics-model-a}
+plot(simulateResiduals(seed_mod.a))
 ```
 
-```{r}
+```{r testing-distributions-for-validity}
 #Which distribution to use?
-MuMIn::model.sel(seed_mod1, seed_mod2, seed_mod3, seed_mod4, seed_mod5, seed_mod55)
+MuMIn::model.sel(seed_mod1, seed_mod2, seed_mod3, seed_mod4, seed_mod5, seed_mod.a)
 ```
 
-```{r}
+```{r viewing-the-model-object}
 #model object
 seed_mod3
 ```
 
-```{r}
+```{r summarizing-the-model-object}
 summary(seed_mod3)
 ```
 
-```{r}
+```{r defining-confidence-intervals}
 #confidence intervals
 confint(seed_mod3)
 ```
@@ -342,6 +308,7 @@ confint(seed_mod3)
 ```{r}
 #adjusted R2
 r.squaredGLMM(seed_mod3)
+# error message: the null model is correct only if all variables used by the original model remain unchanged. 
 ```
 
 ```{r}
@@ -372,10 +339,6 @@ seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treat
 ```
 
 ## This is where our second attempt starts (stored in test code)
-
-
-<<<<<<< HEAD
-=======
 
 
 
@@ -538,7 +501,6 @@ table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>%
   table
 ```
 
->>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
 ## Results
 ○ Interpretation of main results in the context of the system
 ○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
