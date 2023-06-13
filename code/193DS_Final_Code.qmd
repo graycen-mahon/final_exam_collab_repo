@@ -47,6 +47,7 @@ library(corrplot)
 library(AICcmodavg)
 library(GGally)
 library(stats)
+library(dplyr)
 ```
 
 ## Exercise 1
@@ -74,7 +75,7 @@ ggplot(data = krat, aes(x = loc, y = seeds)) +
 ```{r model-object}
 # create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
-  select("loc", "seeds") 
+  dplyr::select("loc", "seeds") 
 ```
 
 
@@ -198,12 +199,14 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 seed_1 <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 ```
 
+
 ```{r}
 #cleaning and subsetting data
-seed_1 
-  #selecting columns to have in data frame
-seed_subset1 <- seed_1 %>% select(species, treatment, nr_seeds, total_nr_infl)
+#selecting columns to have in data frame
+seed_subset <- seed_1 %>%
+  dplyr::select(species, treatment, nr_seeds, total_nr_infl)
 ```
+
 
 ```{r}
 ggplot(seed_1, aes(x = nr_seeds)) +
