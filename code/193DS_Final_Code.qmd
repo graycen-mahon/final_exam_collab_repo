@@ -108,18 +108,20 @@ ggplot(data = krat_subset) +
 Poisson 
 
 ```{r}
-rpois(lambda)
+poisson.test(1560, T = 4, r = 1,
+    alternative = c("greater"),
+    conf.level = 0.95)
 ```
 
+
+```{r}
+rpois(1560, lambda)
+```
 
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
-<<<<<<< HEAD
 # Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
-=======
-# Perform Kruskal-Wallis test
->>>>>>> 39367f6ef221e21ca4d7c2064bdd3702a1443e06
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
 
@@ -130,13 +132,6 @@ rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 small effect size (0.0122)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 39367f6ef221e21ca4d7c2064bdd3702a1443e06
-=======
->>>>>>> de98bb1397f675085dc1ab248ae30a75249d6cb7
 ## Results
 
 ○ Interpretation of main results in the context of the system\
