@@ -82,11 +82,6 @@ krat_subset_summary
 ```
 
 ```{r}
-ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sample = seeds), color = "red") + facet_wrap(~ loc)
-```
-
-```{r}
-mass.var_krat <- var.test(seeds, loc, data = krat_subset, conf.level = 0.975)
 ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds)) + 
   stat_qq_line(aes(sample = seeds), color = "red") +
@@ -100,9 +95,9 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc))
 ```
 
-
-mass_var <- var.test(stem_dry_mass ~ watershed, data = maples_2003, conf.level = 0.975)
-mass_var 
+```{r}
+var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
+```
 
 ## Results
 
@@ -183,7 +178,6 @@ check_normality(full)
 check_heteroscedasticity(full)
 ```
 
-
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
 full_log <- lm(log(nr_seeds) ~ species + total_nr_infl + treatment, data = seed_subset)
@@ -192,7 +186,6 @@ par(mfrow = c(2, 2))
 plot(full_log)
 ```
 
-
 ```{r}
 # Shapiro-Wilk test 
 check_normality(full_log)
@@ -200,10 +193,6 @@ check_normality(full_log)
 check_heteroscedasticity(full_log)
 ```
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
