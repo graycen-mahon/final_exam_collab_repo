@@ -88,9 +88,10 @@ krat_subset_summary
 ```
 
 ```{r}
+# create the QQ plot with the logarithm of "seeds" because the regular one didn't show normality
 ggplot(data = krat_subset) +
-  stat_qq(aes(sample = seeds)) + 
-  stat_qq_line(aes(sample = seeds), color = "red") +
+  stat_qq(aes(sample = log(seeds))) +  # taking the logarithm of "seeds"
+  stat_qq_line(aes(sample = log(seeds)), color = "red") +
   facet_wrap(~ loc)
 ```
 
