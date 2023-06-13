@@ -77,15 +77,12 @@ var = var(seeds),
 count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
-<<<<<<< HEAD
 summarize(mean_l = mean(seeds),
 sd_l = sd(seeds),
 var_l = var(seeds),
 count_l = length(seeds),
 se_l = sd_l/sqrt(count_l),
 margin_l = qt(0.975, df = count_l - 1) * se_l)
-=======
->>>>>>> 1ad721e0ba8a12ca74049d2903a6ea1651ad9ef8
 
 krat_subset_summary
 ```
@@ -209,10 +206,6 @@ check_normality(full_log)
 check_heteroscedasticity(full_log)
 ```
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
