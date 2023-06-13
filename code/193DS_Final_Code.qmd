@@ -105,10 +105,33 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
+<<<<<<< HEAD
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
+=======
+Poisson 
+
+```{r}
+poisson.test(1560, T = 4, r = 1,
+    alternative = c("greater"),
+    conf.level = 0.95)
+```
+
+
+```{r}
+rpois(1560, lambda)
+```
+
+Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
+
+```{r kruskal-test}
+# Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
+<<<<<<< HEAD
+=======
+>>>>>>> ecb47ed641eccec35df6d93bba4fe3ef724f5a41
 # Perform Kruskal-Wallis test
+>>>>>>> 13e66698ad0a7b746b32cfc127e2039f4ec326d8
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
 
