@@ -76,18 +76,6 @@ krat_subset <- krat %>%
 ```
 
 ```{r}
-log_krat <- log(krat_subset$seeds)
-
-log_krat
-```
-
-```{r}
-log_krat <- log_krat[log_krat > 1]
-
-log_krat
-```
-
-```{r}
 log_krat_summary <- log_krat %>%
   summarize(
     mean = mean(seeds),
