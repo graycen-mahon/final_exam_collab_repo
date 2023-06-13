@@ -16,8 +16,7 @@ https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 
 ## Introduction
 
-○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5\
-sentences
+○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
 
 For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
 
@@ -59,7 +58,7 @@ gg_miss_var(krat)
 ```
 
 ```{r explore-data}
-ggplot(data = krat, aes(x = mnd, y = seeds)) +
+ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
@@ -72,12 +71,23 @@ krat_subset <- krat %>%
 ```{r}
 krat_subset_summary <- krat_subset %>%
 group_by(loc) %>%
+<<<<<<< HEAD
 summarize(mean = mean(seeds),
 sd = sd(seeds),
 var = var(seeds),
 count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
+=======
+summarize(mean_l = mean(seeds),
+sd_l = sd(seeds),
+var_l = var(seeds),
+count_l = length(seeds),
+se_l = sd_l/sqrt(count_l),
+margin_l = qt(0.975, df = count_l - 1) * se_l)
+
+krat_subset_summary
+>>>>>>> b812c364edbe2accc4fb86e50636b9327c27eca7
 ```
 
 ```{r}
@@ -85,7 +95,21 @@ ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sam
 ```
 
 ```{r}
+<<<<<<< HEAD
 mass.var_krat <- var.test(seeds, loc, data = krat_subset, conf.level = 0.975)
+=======
+ggplot(data = krat_subset) +
+  stat_qq(aes(sample = seeds)) + 
+  stat_qq_line(aes(sample = seeds), color = "red") +
+  facet_wrap(~ loc)
+```
+
+```{r}
+ggplot(data = krat_subset) +
+  stat_qq(aes(sample = seeds) + 
+  stat_qq_line(aes(sample = log(seeds)), color = "red") +
+  facet_wrap(~ loc))
+>>>>>>> b812c364edbe2accc4fb86e50636b9327c27eca7
 ```
 
 
@@ -185,6 +209,10 @@ check_normality(full_log)
 check_heteroscedasticity(full_log)
 ```
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
