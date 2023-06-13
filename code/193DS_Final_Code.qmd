@@ -141,6 +141,14 @@ summarize(
 krat_subset_summary
 ```
 
+
+```{r}
+ggplot(data = krat_subset) +
+  stat_qq(aes(sample = seeds)) + 
+  stat_qq_line(aes(sample = seeds), color = "red") +
+  facet_wrap(~ loc)
+```
+
 ```{r}
 ggplot(data = krat_subset) +
   stat_qq(aes(sample = log(seeds))) + 
@@ -148,10 +156,7 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 ```{r}
 var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
 ```
@@ -219,29 +224,20 @@ gg_miss_var(seed) +
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-<<<<<<< HEAD
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-=======
-<<<<<<< HEAD
-=======
 #create new subset of objects
->>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
 seed_subset <- seed_col
 #convert Nan values and potential Inf values to NA
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-<<<<<<< HEAD
->>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 seed_subset <- seed_col %>%
 seed_subset <- seed
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 #seed_subset[drop_na(nr_seeds)]
 seed_subset <- seed %>% 
   drop_na(nr_seeds)
-=======
 #drop na values
 seed_subset <- seed_col %>% drop_na(nr_seeds)
->>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
 
 #visualize missing data
 gg_miss_var(seed_subset) +
