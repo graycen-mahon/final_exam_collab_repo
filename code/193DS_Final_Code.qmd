@@ -71,14 +71,12 @@ krat_subset <- krat %>%
 ```{r}
 krat_subset_summary <- krat_subset %>%
 group_by(loc) %>%
-<<<<<<< HEAD
 summarize(mean = mean(seeds),
 sd = sd(seeds),
 var = var(seeds),
 count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
-=======
 summarize(mean_l = mean(seeds),
 sd_l = sd(seeds),
 var_l = var(seeds),
@@ -87,7 +85,6 @@ se_l = sd_l/sqrt(count_l),
 margin_l = qt(0.975, df = count_l - 1) * se_l)
 
 krat_subset_summary
->>>>>>> b812c364edbe2accc4fb86e50636b9327c27eca7
 ```
 
 ```{r}
@@ -95,9 +92,7 @@ ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sam
 ```
 
 ```{r}
-<<<<<<< HEAD
 mass.var_krat <- var.test(seeds, loc, data = krat_subset, conf.level = 0.975)
-=======
 ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds)) + 
   stat_qq_line(aes(sample = seeds), color = "red") +
@@ -109,7 +104,6 @@ ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds) + 
   stat_qq_line(aes(sample = log(seeds)), color = "red") +
   facet_wrap(~ loc))
->>>>>>> b812c364edbe2accc4fb86e50636b9327c27eca7
 ```
 
 
