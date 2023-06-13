@@ -48,6 +48,8 @@ library(AICcmodavg)
 library(GGally)
 library(stats)
 library(dplyr)
+library(effsize)
+library(rstatix)
 ```
 
 ## Exercise 1
@@ -67,18 +69,16 @@ gg_miss_var(krat)
 ```
 
 ```{r explore-data}
+# Exploring data with a 
 ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
-
 
 ```{r model-object}
 # create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
   dplyr::select("loc", "seeds") 
 ```
-
-
 
 ```{r data-summary}
 # create a summary subset of the krat data grouped by location
@@ -105,6 +105,29 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
+Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
+
+```{r kruskal-test}
+
+# Perform Kruskal-Wallis test
+kruskal.test(seeds ~ loc, data = krat_subset)
+```
+
+
+```{r eta-squared}
+# Comparison of ranks for Kruskal Wallis based on H statistic
+rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
+```
+small effect size (0.0122)
+
+----------------------
+** You can run a wilcox.test comparing the two groups to each other if you want ** 
+```{r}
+wilcox.test(seeds ~ loc, data = krat_subset, 
+            exact = FALSE, 
+            paired = FALSE
+                   )
+```
 
 ```{r check-var}
 seeds_var <- var.test(seeds ~ loc, data = krat_subset, 
@@ -113,24 +136,13 @@ seeds_var <- var.test(seeds ~ loc, data = krat_subset,
 seeds_var
 ```
 
-```{r}
-wilcox.test(seeds ~ loc, data = krat_subset, 
-            exact = FALSE, 
-            paired = FALSE
-                   )
-```
-
-
-```{r}
-levels(krat_subset$loc)
-```
-
-
+and compare the variances 
 ```{r}
 var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
 
 var_krat
 ```
+----------------------
 
 ## Results
 
