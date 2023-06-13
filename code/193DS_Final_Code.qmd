@@ -18,7 +18,14 @@ https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 
 ○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
 
-For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
+For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?". Studies have shown that rodents, such as kangaroo rats, are important in seed dispersal and therefore the survival of different plant species while reducing water usage in drought ridden areas (Beck). In areas with high rates of drought, and low rodent populations, seed dispersal is less productive and therefore many plant species become endangered. Drought causes a decrease in seed and plant release height, which decreases seed terminal velocity and therefore possibility of germination (Johnson et al). It is important to study the effectiveness of kangaroo rat seed dispersal and the content of seed banks on kangaroo rat mounds for ecological purposes. The results of this study will allow for a better understanding of whether or not kangaroo rats are beneficial or harmful to the longevity of plant species. 
+
+Citations:
+Beck, J Maurice. 30 August 2010. Seed Dispersal by Scatter-hoarding Rodents in Arid Environments (2010). British Ecological Society. https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2745.2010.01716.x
+
+Johnson JS, Cantrell RS, Cosner C, Hartig F, Hastings A, Rogers HS, Schupp EW, Shea K, Teller BJ, Yu X, Zurell D, Pufal G. Rapid changes in seed dispersal traits may modify plant responses to global change. AoB Plants. 2019 Mar 28;11(3):plz020. doi: 10.1093/aobpla/plz020. PMID: 31198528; PMCID: PMC6548345. 
+
+Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative. https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597 (Accessed 2023-06-10).
 
 ## Methods
 ○ Any cleaning and wrangling steps
@@ -69,6 +76,8 @@ krat_subset <- krat %>%
 ```
 
 ```{r}
+# create a summary subset of the krat data grouped by location
+# calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
 krat_subset_summary <- krat_subset %>%
 group_by(loc) %>%
 summarize(mean = mean(seeds),
@@ -77,29 +86,15 @@ var = var(seeds),
 count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
-summarize(mean_l = mean(seeds),
-sd_l = sd(seeds),
-var_l = var(seeds),
-count_l = length(seeds),
-se_l = sd_l/sqrt(count_l),
-margin_l = qt(0.975, df = count_l - 1) * se_l)
 
 krat_subset_summary
 ```
 
 ```{r}
-# create the QQ plot with the logarithm of "seeds" because the regular one didn't show normality
 ggplot(data = krat_subset) +
-  stat_qq(aes(sample = log(seeds))) +  # taking the logarithm of "seeds"
+  stat_qq(aes(sample = log(seeds))) + 
   stat_qq_line(aes(sample = log(seeds)), color = "red") +
   facet_wrap(~ loc)
-```
-
-```{r}
-ggplot(data = krat_subset) +
-  stat_qq(aes(sample = seeds) + 
-  stat_qq_line(aes(sample = log(seeds)), color = "red") +
-  facet_wrap(~ loc))
 ```
 
 ```{r}
@@ -121,8 +116,15 @@ visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1.
 
 ## Introduction
 
-○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5\
-sentences
+○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
+
+For the second data set, which is the study of individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge (the arctic tundra) we analyzed the data in order to answer the questions, "How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?". Studies show that increased shrub abundance can lead to increased levels of snow which can allow for "higher winter soil temperatures, greater microbial activity, and more plant-available nitrogen. High levels of soil nitrogen favor shrub growth the following summer" (Sturm et al). Each of these characteristics can lead to increased growth in spring and summer, altering species richness and plant community composition. According to Seaver's study from the Environmental Data Initiative, this can therefore effect the reproductive success of plants, which is studied through phenology- the timing of flowering in plants (Seaver). Flowering times are affected by surrounding plant and insect species, and studies show that the most common flowering time of plants is during seasons with higher biodiversity. Increased shrubs would indicate higher rates of flowering. 
+
+Citations:
+
+Matthew Sturm and others, Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland, BioScience, Volume 55, Issue 1, January 2005, Pages 17–26, https://doi.org/10.1641/0006-3568(2005)055[0017:WBPCHC]2.0.CO;2
+
+Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10).
 
 ## Methods
 
@@ -157,16 +159,13 @@ gg_miss_var(seed)
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-<<<<<<< HEAD
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 seed_subset <- seed_col %>%
-=======
 seed_subset <- seed
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 #seed_subset[drop_na(nr_seeds)]
 seed_subset <- seed %>% 
->>>>>>> 2ef2cb039201b8f5b32ba92273802103a0c88db2
   drop_na(nr_seeds)
 
 gg_miss_var(seed_subset)
