@@ -131,9 +131,12 @@ rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 small effect size (0.0122)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 39367f6ef221e21ca4d7c2064bdd3702a1443e06
+=======
+>>>>>>> de98bb1397f675085dc1ab248ae30a75249d6cb7
 ## Results
 
 ○ Interpretation of main results in the context of the system\
@@ -220,7 +223,7 @@ seed_1 %>%
 ```{r}
 #cleaning and sub-setting data
 #selecting columns to have in data frame
-#seed_subset1 <- seed_1 %>%
+coseed_subset1 <- seed_1 %>%
   dplyr::select(species, treatment, nr_seeds, total_nr_infl, shrub_num)
 
 
