@@ -52,7 +52,6 @@ library(effsize)
 library(rstatix)
 ```
 
-## Exercise 1
 
 ```{r read-data}
 # checking to make sure the "here" package is starting at the correct directory
@@ -70,14 +69,20 @@ gg_miss_var(krat)
 
 ```{r explore-data}
 # Exploring data with a 
-ggplot(data = krat, aes(x = loc, y = seeds)) +
+ggplot(data = krat_subset1, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
 ```{r model-object}
 # create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
+<<<<<<< HEAD
   dplyr::select("loc", "seeds")
+=======
+  dplyr::select("loc", "seeds") 
+
+  krat_subset1 <- subset(krat_subset, !(loc %in% c("I", "E")))
+>>>>>>> 892a55840d40899199f8436162d9e3b1de495732
 ```
 
 
@@ -99,24 +104,36 @@ krat_subset_summary
 
 
 ```{r check-normality}
-ggplot(data = krat_subset) +
+#check for normality in the data 
+ggplot(data = krat_subset1) +
   stat_qq(aes(sample = seeds)) + 
   stat_qq_line(aes(sample = seeds), color = "red") +
   facet_wrap(~ loc)
 ```
 
+<<<<<<< HEAD
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
 # Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
 kruskal.test(seeds ~ loc, data = krat_subset)
+=======
+Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
+
+
+
+```{r kruskal-test}
+# Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
+# Perform Kruskal-Wallis test
+kruskal.test(seeds ~ loc, data = krat_subset1)
+>>>>>>> 892a55840d40899199f8436162d9e3b1de495732
 ```
 
 ```{r eta-squared}
 # Comparison of ranks for Kruskal Wallis based on H statistic
-rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
+rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset1)
 ```
-small effect size (0.0122)
+small effect size (0.0128)
 
 
 

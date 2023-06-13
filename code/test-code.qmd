@@ -3,9 +3,89 @@ title: "test-code"
 format: html
 editor: visual
 ---
+## Problem 1
 
+
+```{r}
+# Assuming 'counts' is a vector of count data
+# Fit a Poisson regression model
+krat_model <- glm(seeds ~ loc, family = poisson, data = krat_subset1)
+
+# Extract the estimated dispersion parameter
+dispersion <- summary(krat_model)$dispersion
+
+# Check if the dispersion parameter is significantly greater than 1
+if (dispersion > 1) {
+  cat("Overdispersion detected (dispersion parameter =", dispersion, ")\n")
+} else {
+  cat("No evidence of overdispersion (dispersion parameter =", dispersion, ")\n")
+}
+```
+
+```{r poisson-test}
+poisson.test(1560, T = 4, r = 1,
+    alternative = c("greater"),
+    conf.level = 0.95)
+```
+
+
+```{r}
+rpois(1560, lambda)
+#Poisson Test
+
+# Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
+```
+poisson test attempt
+
+overdispersion occurs when the variance of the counts is greater than the mean. In the Poisson distribution, the mean and variance are equal. To assess overdispersion, you can compare the sample variance to the sample mean. If the variance is significantly larger, it suggests overdispersion. In such cases, you may need to consider alternative models like negative binomial regression.
+
+```{r}
+# Assuming 'counts' is a vector of count data
+# Fit a Poisson regression model
+krat_model <- glm(seeds ~ loc, family = poisson, data = krat_subset1)
+
+# Extract the estimated dispersion parameter
+dispersion <- summary(krat_model)$dispersion
+
+# Check if the dispersion parameter is significantly greater than 1
+if (dispersion > 1) {
+  cat("Overdispersion detected (dispersion parameter =", dispersion, ")\n")
+} else {
+  cat("No evidence of overdispersion (dispersion parameter =", dispersion, ")\n")
+}
+```
+
+```{r}
+# Assuming 'model' is the fitted Poisson regression model
+# Calculate Pearson residuals
+residuals <- residuals(krat_model, type = "pearson")
+
+# Calculate the variance and mean of the residuals
+variance <- var(residuals)
+mean_residuals <- mean(residuals)
+
+# Check if the variance is larger than the mean
+if (variance > mean_residuals) {
+  cat("Overdispersion detected (variance =", variance, ", mean =", mean_residuals, ")\n")
+} else {
+  cat("No evidence of overdispersion (variance =", variance, ", mean =", mean_residuals, ")\n")
+}
+```
+
+
+<<<<<<< HEAD
 ## problem two original attempt
 
+=======
+```{r}
+poisson.test(1560, T = 4, r = 1,
+    conf.level = 0.95)
+```
+
+end poisson test attempt
+
+## Problem 2
+>>>>>>> 892a55840d40899199f8436162d9e3b1de495732
 ```{r knitr-example, eval = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 # suppress any messages from R using the code chunk above, setting messages and warnings to false}
