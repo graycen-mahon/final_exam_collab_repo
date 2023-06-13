@@ -198,20 +198,140 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 #reading in the data sets for problem 2
 seed_1 <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 ```
+```{r}
+gg_miss_var(seed_1) +
+  labs(caption = "Missing Data in the Seed Dataset") +
+  theme(plot.caption = element_text(hjust = 0.6))
+
+skim(seed_1)
+```
+
+```{r}
+seed_1 %>% 
+  dplyr::select(!species) %>% 
+  ggpairs()
+#??
+```
 
 
 ```{r}
 #cleaning and subsetting data
 #selecting columns to have in data frame
-seed_subset <- seed_1 %>%
+seed_subset1 <- seed_1 %>%
   dplyr::select(species, treatment, nr_seeds, total_nr_infl)
+
+seed_col <- seed_subset1
+seed_subset1[is.na(seed_subset1) | seed_subset1 == "Inf"] <- NA 
+
+seed_col1 <- seed_col %>% 
+  drop_na(nr_seeds)
+
+seed_col1
 ```
 
 
 ```{r}
-ggplot(seed_1, aes(x = nr_seeds)) +
-  geom_histogram(bins = 8.3)
+ggplot(seed_col1, aes(x = nr_seeds)) +
+  geom_histogram(bins = 7)
 ```
+
+```{r}
+#this is a linear model that we know is wrong
+seed_mod1 <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1)
+
+#generalized linear model with Poisson distribution
+seed_mod2 <- glm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "poisson")
+seed_mod2.a <- glm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "poisson")
+                                
+#generalized linear model with negative binomial distribution
+seed_mod3 <- glm.nb(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1)
+seed_mod3.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "nbinom2")
+
+#generalized linear model with Poisson distribution and random effect of site
+seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
+seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
+#use species or treatment for random effect???
+
+#generalized linear model with negative binomial distribution and random effect of site
+seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1)
+seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "nbinom2")
+
+seed_mod55 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|total_nr_infl), data = seed_col1)
+#error for last few models, need numeric data?
+```
+
+Look at Residuals
+```{r diagnostics}
+plot(simulateResiduals(seed_mod2))
+```
+
+```{r}
+plot(simulateResiduals(seed_mod3))
+```
+
+```{r}
+plot(simulateResiduals(seed_mod4))
+```
+
+```{r}
+plot(simulateResiduals(seed_mod5))
+```
+
+```{r}
+plot(simulateResiduals(seed_mod55))
+```
+
+```{r}
+#Which distribution to use?
+MuMIn::model.sel(seed_mod1, seed_mod2, seed_mod3, seed_mod4, seed_mod5, seed_mod55)
+```
+```{r}
+#model object
+seed_mod3
+```
+```{r}
+summary(seed_mod3)
+```
+
+```{r}
+#confidence intervals
+confint(seed_mod3)
+```
+
+```{r}
+#adjusted R2
+r.squaredGLMM(seed_mod3)
+```
+
+```{r}
+#model object in table 
+seed_mod3 %>% 
+  as_flextable()
+```
+
+```{r}
+seed_predictions <- ggpredict(seed_mod3, terms = c("species", "total_nr_infl", "treatment")) %>% 
+  rename(treatment = group,
+         species = facet)
+
+seed_predictions
+
+ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
+  geom_point(aes(color = treatment), alpha = 0.5) +
+  facet_wrap(~species, scales = "free_y") +
+  geom_line(data = seed_predictions, aes(x = x, y = Predicted, color = treatment)) +
+  geom_ribbon(data = seed_predictions, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high, fill = mined), alpha = 0.2) +
+  scale_fill_manual(values = c("yes" = "blue", "no" = "orange")) +
+  scale_color_manual(values = c("yes" = "blue", "no" = "orange")) +
+  theme_bw() +
+  facet_wrap(~species, scales = "free_y") +
+  labs(fill = "Mined", color = "Mined")
+
+seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
+
+```
+
+
 
 ```{r knitr-example, eval = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
@@ -241,7 +361,7 @@ gg_miss_var(seed) +
 ```
 
 ```{r}
-# creating a seed subset object and dropping na values from the table
+#creating a seed subset object and dropping na values from the table
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 seed_subset <- seed_col %>% 
@@ -251,7 +371,6 @@ seed_subset <- seed_col %>%
 gg_miss_var(seed_subset) +
   labs(caption = "Missing Data in the Seed Subset") +
   theme(plot.caption = element_text(hjust = 0.6))
-
 #seed_subset$nr_seeds = as.numeric(as.character(seed_subset$nr_seeds)) 
 
 ```
