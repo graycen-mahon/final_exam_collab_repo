@@ -101,12 +101,6 @@ log_krat_summary
 ```
 
 ```{r}
-summarize(mean_l = mean(seeds),
-sd_l = sd(seeds),
-var_l = var(seeds),
-count_l = length(seeds),
-se_l = sd_l/sqrt(count_l),
-margin_l = qt(0.975, df = count_l - 1) * se_l)
 # create a summary subset of the krat data grouped by location
 # calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
 krat_subset_summary <- krat_subset %>%
@@ -148,10 +142,7 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 ```{r}
 var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
 ```
@@ -180,6 +171,8 @@ Citations:
 Matthew Sturm and others, Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland, BioScience, Volume 55, Issue 1, January 2005, Pages 17–26, https://doi.org/10.1641/0006-3568(2005)055[0017:WBPCHC]2.0.CO;2
 
 Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10).
+
+Wolf, A Amelia and others. Flowering Phenology shifts in Response to Biodiversity Loss (13 March 2017). National Academy of Science. Carnegie Institution of Washington, Stanford, CA. https://www.pnas.org/doi/10.1073/pnas.1608357114 
 
 ## Methods
 
@@ -219,29 +212,20 @@ gg_miss_var(seed) +
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-<<<<<<< HEAD
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-=======
-<<<<<<< HEAD
-=======
 #create new subset of objects
->>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
 seed_subset <- seed_col
 #convert Nan values and potential Inf values to NA
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-<<<<<<< HEAD
->>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 seed_subset <- seed_col %>%
 seed_subset <- seed
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 #seed_subset[drop_na(nr_seeds)]
 seed_subset <- seed %>% 
   drop_na(nr_seeds)
-=======
 #drop na values
 seed_subset <- seed_col %>% drop_na(nr_seeds)
->>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
 
 #visualize missing data
 gg_miss_var(seed_subset) +
@@ -354,8 +338,6 @@ table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>%
   autofit()
 #show table 
   table
-```
-
 ```
 
 ## Results
