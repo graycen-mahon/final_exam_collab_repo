@@ -108,7 +108,6 @@ ggplot(data = krat_subset) +
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
-
 # Perform Kruskal-Wallis test
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
@@ -120,29 +119,6 @@ rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 small effect size (0.0122)
 
-----------------------
-** You can run a wilcox.test comparing the two groups to each other if you want ** 
-```{r}
-wilcox.test(seeds ~ loc, data = krat_subset, 
-            exact = FALSE, 
-            paired = FALSE
-                   )
-```
-
-```{r check-var}
-seeds_var <- var.test(seeds ~ loc, data = krat_subset, 
-                      conf.level = 0.975)
-# variances are not equal 
-seeds_var
-```
-
-and compare the variances 
-```{r}
-var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
-
-var_krat
-```
-----------------------
 
 ## Results
 
@@ -210,6 +186,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 #reading in the data sets for problem 2
 seed_1 <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 ```
+
 ```{r}
 gg_miss_var(seed_1) +
   labs(caption = "Missing Data in the Seed Dataset") +
@@ -222,12 +199,12 @@ skim(seed_1)
 seed_1 %>% 
   dplyr::select(!species) %>% 
   ggpairs()
-#??
+# make a ggpairs plot to show the relationship between variables using the seed data set
 ```
 
 
 ```{r}
-#cleaning and subsetting data
+#cleaning and sub-setting data
 #selecting columns to have in data frame
 seed_subset1 <- seed_1 %>%
   dplyr::select(species, treatment, nr_seeds, total_nr_infl)
@@ -240,7 +217,6 @@ seed_col1 <- seed_col %>%
 
 seed_col1
 ```
-
 
 ```{r}
 ggplot(seed_col1, aes(x = nr_seeds)) +
@@ -342,6 +318,20 @@ ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
 seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
