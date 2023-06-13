@@ -202,9 +202,9 @@ gg_miss_var(seed) +
 ```{r}
 # creating a seed subset object and dropping na values from the table
 seed_subset <- seed_col
-seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA %>% 
+seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
+seed_subset <- seed_col %>% 
   drop_na(nr_seeds)
-
 
 #visualize missing data
 gg_miss_var(seed_subset) +
