@@ -89,6 +89,7 @@ log_krat
 
 ```{r}
 log_krat_summary <- log_krat %>%
+  group_by(loc) %>% 
   summarize(
     mean = mean(seeds),
     sd = sd(seeds),
@@ -103,7 +104,7 @@ log_krat_summary
 ```{r}
 # create a summary subset of the krat data grouped by location
 # calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
-krat_subset_summary <- krat_subset %>%
+krat_subset_summary2 <- krat_subset %>%
 group_by(loc) %>%
 summarize(mean = mean(seeds),
 sd = sd(seeds),
@@ -112,33 +113,13 @@ count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
 
-log_krat_summary
-```
-
-
-```{r}
-krat_subset_summary <- krat_subset %>%
-summarize(
-  mean = mean(seeds),
-  sd = sd(seeds),
-  var = var(seeds),
-  count = length(seeds),
-  se = sd/sqrt(count),
-  margin = qt(0.975, df = count - 1) * se)
-  summarize(mean_l = mean(seeds),
-  sd_l = sd(seeds),
-  var_l = var(seeds),
-  count_l = length(seeds),
-  se_l = sd_l/sqrt(count_l),
-  margin_l = qt(0.975, df = count_l - 1) * se_l)
-
 krat_subset_summary
 ```
 
 ```{r}
 ggplot(data = krat_subset) +
   stat_qq(aes(sample = log(seeds))) + 
-  stat_qq_line(aes(sample = log(seeds)), color = "red") +
+  stat_qq_line(aes(sample = log(seeds)), color = "orange") +
   facet_wrap(~ loc)
 ```
 
@@ -213,19 +194,9 @@ gg_miss_var(seed) +
 ```{r}
 # creating a seed subset object and dropping na values from the table
 seed_subset <- seed_col
-seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-#create new subset of objects
-seed_subset <- seed_col
-#convert Nan values and potential Inf values to NA
-seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-seed_subset <- seed_col %>%
-seed_subset <- seed
-seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-#seed_subset[drop_na(nr_seeds)]
-seed_subset <- seed %>% 
+seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA %>% 
   drop_na(nr_seeds)
-#drop na values
-seed_subset <- seed_col %>% drop_na(nr_seeds)
+
 
 #visualize missing data
 gg_miss_var(seed_subset) +
@@ -233,6 +204,7 @@ gg_miss_var(seed_subset) +
   theme(plot.caption = element_text(hjust = 0.6))
 
 #seed_subset$nr_seeds = as.numeric(as.character(seed_subset$nr_seeds)) 
+
 ```
 
 ```{r null-and-full-models}
