@@ -72,17 +72,22 @@ krat_subset <- krat %>%
 ```{r}
 krat_subset_summary <- krat_subset %>%
 group_by(loc) %>%
-summarize(mean_l = mean(seeds),
-sd_l = sd(seeds),
-var_l = var(seeds),
-count_l = length(seeds),
-se_l = sd_l/sqrt(count_l),
-margin_l = qt(0.975, df = count_l - 1) * se_l)
+summarize(mean = mean(seeds),
+sd = sd(seeds),
+var = var(seeds),
+count = length(seeds),
+se = sd/sqrt(count),
+margin = qt(0.975, df = count - 1) * se)
 ```
 
 ```{r}
-ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sample = seeds), color = "orange") + facet_wrap(~ loc)
+ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sample = seeds), color = "red") + facet_wrap(~ loc)
 ```
+
+```{r}
+mass.var_krat <- var.test(seeds, loc, data = krat_subset, conf.level = 0.975)
+```
+
 
 mass_var <- var.test(stem_dry_mass ~ watershed, data = maples_2003, conf.level = 0.975)
 mass_var 
