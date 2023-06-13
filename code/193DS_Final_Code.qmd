@@ -101,12 +101,6 @@ log_krat_summary
 ```
 
 ```{r}
-summarize(mean_l = mean(seeds),
-sd_l = sd(seeds),
-var_l = var(seeds),
-count_l = length(seeds),
-se_l = sd_l/sqrt(count_l),
-margin_l = qt(0.975, df = count_l - 1) * se_l)
 # create a summary subset of the krat data grouped by location
 # calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
 krat_subset_summary <- krat_subset %>%
@@ -185,6 +179,8 @@ Citations:
 Matthew Sturm and others, Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland, BioScience, Volume 55, Issue 1, January 2005, Pages 17–26, https://doi.org/10.1641/0006-3568(2005)055[0017:WBPCHC]2.0.CO;2
 
 Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10).
+
+Wolf, A Amelia and others. Flowering Phenology shifts in Response to Biodiversity Loss (13 March 2017). National Academy of Science. Carnegie Institution of Washington, Stanford, CA. https://www.pnas.org/doi/10.1073/pnas.1608357114 
 
 ## Methods
 
@@ -350,8 +346,6 @@ table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>%
   autofit()
 #show table 
   table
-```
-
 ```
 
 ## Results
