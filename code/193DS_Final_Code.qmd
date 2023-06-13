@@ -155,8 +155,9 @@ seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 
 ```{r cleaning-the-data}
 seed %>% 
-  clean_names() %>% 
-  select(species, treatment, nr_seeds, total_nr_infl)
+  clean_names()
+
+ seed_col <- seed %>% select(species, treatment, nr_seeds, total_nr_infl)
 ```
 
 ```{r missing-data-visualization-(1-4)}
@@ -166,12 +167,9 @@ gg_miss_var(seed)
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-<<<<<<< HEAD
-seed_subset <- seed
+seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-#seed_subset[drop_na(nr_seeds)]
-=======
-seed_subset <- seed %>% 
+seed_subset <- seed_col %>%
   drop_na(nr_seeds)
 
 gg_miss_var(seed_subset)
@@ -182,7 +180,6 @@ gg_miss_var(seed_subset)
 null <- lm(nr_seeds ~ 1, data = seed_subset)
 # full models includes all variables to assess a linear relationship between each predictor variable and seeds
 full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
->>>>>>> 4e16dc06327ea6f177414ed18955e9e0f7973ebc
 ```
 
 ```{r}
