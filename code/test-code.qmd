@@ -1,0 +1,161 @@
+---
+title: "test-code"
+format: html
+editor: visual
+---
+
+## poisson test attempt
+```{r}
+poisson.test(1560, T = 4, r = 1,
+    conf.level = 0.95)
+```
+## end poisson test attempt
+
+## problem two original attempt
+```{r knitr-example, eval = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+# suppress any messages from R using the code chunk above, setting messages and warnings to false}
+```
+
+```{r reading-in-the-dataset}
+#reading in the data sets for problem 2
+seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
+```
+
+```{r cleaning-the-data}
+seed %>% 
+  #cleaning names
+  clean_names()
+  #creating new dataframe with columns
+seed_col <- seed %>% 
+  #selecting columns to have in data frame
+  select(species, treatment, nr_seeds, total_nr_infl)
+```
+
+```{r missing-data-visualization-(1-4)}
+#visualizing miss data points in seeds dataset
+gg_miss_var(seed) +
+  labs(caption = "Missing Data in the Seed Dataset") +
+  theme(plot.caption = element_text(hjust = 0.6))
+```
+
+```{r}
+#creating a seed subset object and dropping na values from the table
+seed_subset <- seed_col
+seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
+seed_subset <- seed_col %>% 
+  drop_na(nr_seeds)
+
+#visualize missing data
+gg_miss_var(seed_subset) +
+  labs(caption = "Missing Data in the Seed Subset") +
+  theme(plot.caption = element_text(hjust = 0.6))
+#seed_subset$nr_seeds = as.numeric(as.character(seed_subset$nr_seeds)) 
+
+```
+
+```{r null-and-full-models}
+#null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
+null <- lm(nr_seeds ~ 1, data = seed_subset)
+#full models includes all variables to assess a linear relationship between each predictor variable and seeds
+full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
+```
+
+```{r}
+#create linear model for null model, make all graphs fit into pone 
+null_model <- lm(nr_seeds ~ 1, data = seed_subset)
+par(mfrow = c(2, 2))
+#plot full linear model
+plot(full)
+```
+
+```{r}
+#Shapiro-Wilk test 
+check_normality(full)
+#Breusch-Pagan test
+check_heteroscedasticity(full)
+```
+
+```{r}
+#create a new model taking the log of the relationship between total mass and species type
+#full_log <- lm(log(nr_seeds + .000000000000000000000000000000001) ~ species + total_nr_infl + treatment, data = seed_subset)
+
+full_log <- lm(log(nr_seeds + min(nr_seeds[nr_seeds > 0])) ~ species + total_nr_infl + treatment, data = seed_subset)
+
+#plotting to visually assess normality and homoscedasticity, making all four graphs on one page
+par(mfrow = c(2, 2))
+#plot full graph
+plot(full_log)
+```
+
+```{r}
+#Shapiro-Wilk test 
+check_normality(full_log)
+#Breusch-Pagan test
+check_heteroscedasticity(full_log)
+```
+
+```{r explore-data-species}
+ggplot(data = seed_subset, aes(x = species, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r explore-data-inflorescences}
+ggplot(data = seed_subset, aes(x = total_nr_infl, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r explore-data plot type}
+ggplot(data = seed_subset, aes(x = treatment, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r}
+#storing our summary model as an object 
+model_summary <- summary(full)
+#storing ANOVA table as an object
+model_anova <- anova(full)
+
+#displaying results from summary using the model object
+model_summary
+model_anova
+```
+
+```{r}
+#creating a table that summarizes the anova table 
+model_anova_table <- tidy(model_anova) %>% 
+    #rounding the statistics, sum of mean squares and sum of squares, to two digits
+    mutate(across(sumsq:meansq, ~ round(.x, digits = 2))) %>% 
+    #round the F-statistic value to have 2 digits
+    mutate(statistic = round(statistic, digits = 2)) %>% 
+    ##replace the p value with < 0.001 rather than a super small number
+    mutate(p.value = case_when(p.value < 0.001 ~ "< 0.001")) %>% 
+    #rename the length to be more proper
+    mutate(term = case_when(term == "length" ~ "Length", TRUE ~ term)) %>% 
+    #create a flex table object from the data frame
+    flextable() %>% 
+    # change the header labels to be meaningful??
+    set_header_labels(df = "Degrees of Freedom", 
+                    sumsq = "Sum of Squares",
+                    meansq = "Mean Squares",
+                    statistic = "F-statistic",
+                    p.value = "P-value")
+
+model_anova_table
+```
+
+```{r}
+#creating a summary table
+table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>% 
+#change low p-values to .001, change all values to round to 3 digits using mutate function
+  mutate(statistic = round(statistic, digits = 3)) %>%
+  mutate(std.error = round(std.error, digits = 3)) %>%
+  mutate(conf.low = round(conf.low, digits = 3)) %>%
+  mutate(conf.high = round(conf.high, digits = 3)) %>%
+  mutate(estimate = round(estimate, digits = 3)) %>%
+  mutate(p.value = case_when(p.value < 0.001 ~ "< 0.001")) %>% 
+#create flextable
+  flextable() %>% 
+#fitting table to viewer
+  autofit()
+#show table 
+  table
+```
+## end prob two original attempt

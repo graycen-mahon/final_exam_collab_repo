@@ -109,6 +109,7 @@ ggplot(data = krat_subset1) +
   facet_wrap(~ loc)
 ```
 
+<<<<<<< HEAD
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r}
@@ -136,14 +137,41 @@ poisson.test(1560, T = 4, r = 1,
 
 ```{r}
 rpois(1560, lambda)
+=======
+<<<<<<< HEAD
+Poisson Test
+=======
+<<<<<<< HEAD
+Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
+
+```{r kruskal-test}
+=======
+Poisson 
+>>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
+
+```{r poisson-test}
+rpois(1560, )
+>>>>>>> 5348f5835e9c087c2bca2f6d9aecf3c1944b6d6c
 ```
 
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
+<<<<<<< HEAD
+# Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test 
+=======
 # Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
+<<<<<<< HEAD
 # Perform Kruskal-Wallis test
 kruskal.test(seeds ~ loc, data = krat_subset1)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> ecb47ed641eccec35df6d93bba4fe3ef724f5a41
+>>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
+# Perform Kruskal-Wallis test
+kruskal.test(seeds ~ loc, data = krat_subset)
+>>>>>>> 5348f5835e9c087c2bca2f6d9aecf3c1944b6d6c
 ```
 
 
@@ -382,9 +410,11 @@ ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
 seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
 ```
 
-## This is where our second attempt starts
+## This is where our second attempt starts (stored in test code)
 
 
+<<<<<<< HEAD
+=======
 
 
 
@@ -547,6 +577,7 @@ table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>%
   table
 ```
 
+>>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
 ## Results
 ○ Interpretation of main results in the context of the system
 ○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
