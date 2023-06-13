@@ -88,9 +88,10 @@ krat_subset_summary
 ```
 
 ```{r}
+# create the QQ plot with the logarithm of "seeds" because the regular one didn't show normality
 ggplot(data = krat_subset) +
-  stat_qq(aes(sample = seeds)) + 
-  stat_qq_line(aes(sample = seeds), color = "red") +
+  stat_qq(aes(sample = log(seeds))) +  # taking the logarithm of "seeds"
+  stat_qq_line(aes(sample = log(seeds)), color = "red") +
   facet_wrap(~ loc)
 ```
 
@@ -156,19 +157,16 @@ gg_miss_var(seed)
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-<<<<<<< HEAD
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 seed_subset <- seed_col %>%
-=======
-seed_subset <- seed
-seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-#seed_subset[drop_na(nr_seeds)]
-seed_subset <- seed %>% 
->>>>>>> 2ef2cb039201b8f5b32ba92273802103a0c88db2
   drop_na(nr_seeds)
 
 gg_miss_var(seed_subset)
+
+seed_subset$nr_seeds = as.numeric(as.character(seed_subset$nr_seeds)) 
+
+#is.na(), is.nan(), and is.finite() to identify problematic values.
 ```
 
 ```{r null-and-full-models}
@@ -193,7 +191,10 @@ check_heteroscedasticity(full)
 
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
-full_log <- lm(log(nr_seeds) ~ species + total_nr_infl + treatment, data = seed_subset)
+full_log <- lm(log(nr_seeds + .000000000000000000000000000000001) ~ species + total_nr_infl + treatment, data = seed_subset)
+
+full_log <- lm(log(nr_seeds + min(nr_seeds[nr_seeds > 0])) ~ species + total_nr_infl + treatment, data = seed_subset)
+
 #plotting to visually assess normality and homoscedasticity
 par(mfrow = c(2, 2))
 plot(full_log)
@@ -216,7 +217,7 @@ ggplot(data = seed_subset, aes(x = nr_seeds, y = total_nr_infl), na.rm = TRUE) +
 
 ## Results
 
-○ Interpretation of main results in the context of the system\
-○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.\
-○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption\
+○ Interpretation of main results in the context of the system
+○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
+○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption
 ○ A table (if appropriate) with a caption
