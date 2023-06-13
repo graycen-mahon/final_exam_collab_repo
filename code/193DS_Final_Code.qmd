@@ -122,6 +122,10 @@ Running a Kruskal-Wallis test to compare the seed count data for four different 
 
 ```{r kruskal-test}
 # Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
+<<<<<<< HEAD
+=======
+# Perform Kruskal-Wallis test
+>>>>>>> 13e66698ad0a7b746b32cfc127e2039f4ec326d8
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
 
