@@ -172,6 +172,49 @@ Wolf, A Amelia and others. Flowering Phenology shifts in Response to Biodiversit
 ○ Statistical tests and null hypotheses\
 ○ Citations for packages, software, data, or other steps
 
+```{r}
+#packages for model
+library(MASS)
+library(lme4)
+library(glmmTMB)
+
+library(DHARMa)
+library(MuMIn)
+library(ggeffects)
+library(lmtest)
+library(broom)
+
+library(tidyverse)
+library(here)
+library(naniar)
+library(skimr)
+library(GGally)
+library(flextable)
+```
+
+Redoing problem 2 based on workshop 10
+```{r knitr-example, eval = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+# suppress any messages from R using the code chunk above, setting messages and warnings to false}
+```
+
+```{r reading-in-the-dataset}
+#reading in the data sets for problem 2
+seed_1 <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
+```
+
+```{r}
+#cleaning and subsetting data
+seed_1 
+  #selecting columns to have in data frame
+seed_subset1 <- seed_1 %>% select(species, treatment, nr_seeds, total_nr_infl)
+```
+
+```{r}
+ggplot(seed_1, aes(x = nr_seeds)) +
+  geom_histogram(bins = 8.3)
+```
+
 ```{r knitr-example, eval = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 # suppress any messages from R using the code chunk above, setting messages and warnings to false}
