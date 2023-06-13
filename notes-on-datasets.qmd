@@ -53,7 +53,7 @@ Individual and community flowering phenology, seed counts and pollinator visitat
 -   through to change micro climatic conditions, potentially leading to changes in plant community composition
 -   Niwot Ridge Long Term Ecological Research site in the mountains of colorado
     -   experiencing this shrubification for 40 years
--   important aspect of plant resporductive success:
+-   important aspect of plant reproductive success:
     -   timing of flowering, known as flowering phenology
     -   controlled by env conditions
 
@@ -61,7 +61,7 @@ Individual and community flowering phenology, seed counts and pollinator visitat
 
 -   exploring 21 plant species in the community
     -   taken place over 3 years
-        -   monitor flower numbers present in 54 pairs of shrub influenced and ppen plots (108 plots total)
+        -   monitor flower numbers present in 54 pairs of shrub influenced and open plots (108 plots total)
 -   took seeds from these five species from 12 pairs of shrub and open plots, totaling 24 plots
 -   counted and weighed the seeds to determine reproductive success
 
