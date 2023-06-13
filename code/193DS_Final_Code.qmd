@@ -104,7 +104,6 @@ var_l = var(seeds),
 count_l = length(seeds),
 se_l = sd_l/sqrt(count_l),
 margin_l = qt(0.975, df = count_l - 1) * se_l)
-=======
 # create a summary subset of the krat data grouped by location
 # calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
 krat_subset_summary <- krat_subset %>%
@@ -115,7 +114,6 @@ var = var(seeds),
 count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
->>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 
 log_krat_summary
 ```
