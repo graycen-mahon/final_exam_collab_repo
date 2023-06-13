@@ -18,7 +18,14 @@ https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 
 ○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
 
-For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
+For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?". Studies have shown that rodents, such as kangaroo rats, are important in seed dispersal and therefore the survival of different plant species while reducing water usage in drought ridden areas (Beck). In areas with high rates of drought, and low rodent populations, seed dispersal is less productive and therefore many plant species become endangered. Drought causes a decrease in seed and plant release height, which decreases seed terminal velocity and therefore possibility of germination (Johnson et al). It is important to study the effectiveness of kangaroo rat seed dispersal and the content of seed banks on kangaroo rat mounds for ecological purposes. The results of this study will allow for a better understanding of whether or not kangaroo rats are beneficial or harmful to the longevity of plant species. 
+
+Citations:
+Beck, J Maurice. 30 August 2010. Seed Dispersal by Scatter-hoarding Rodents in Arid Environments (2010). British Ecological Society. https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2745.2010.01716.x
+
+Johnson JS, Cantrell RS, Cosner C, Hartig F, Hastings A, Rogers HS, Schupp EW, Shea K, Teller BJ, Yu X, Zurell D, Pufal G. Rapid changes in seed dispersal traits may modify plant responses to global change. AoB Plants. 2019 Mar 28;11(3):plz020. doi: 10.1093/aobpla/plz020. PMID: 31198528; PMCID: PMC6548345. 
+
+Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative. https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597 (Accessed 2023-06-10).
 
 ## Methods
 ○ Any cleaning and wrangling steps
@@ -90,12 +97,25 @@ log_krat_summary
 ```
 
 ```{r}
+<<<<<<< HEAD
 summarize(mean_l = mean(seeds),
 sd_l = sd(seeds),
 var_l = var(seeds),
 count_l = length(seeds),
 se_l = sd_l/sqrt(count_l),
 margin_l = qt(0.975, df = count_l - 1) * se_l)
+=======
+# create a summary subset of the krat data grouped by location
+# calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
+krat_subset_summary <- krat_subset %>%
+group_by(loc) %>%
+summarize(mean = mean(seeds),
+sd = sd(seeds),
+var = var(seeds),
+count = length(seeds),
+se = sd/sqrt(count),
+margin = qt(0.975, df = count - 1) * se)
+>>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 
 log_krat_summary
 ```
@@ -121,14 +141,16 @@ krat_subset_summary
 ```
 
 ```{r}
-# create the QQ plot with the logarithm of "seeds" because the regular one didn't show normality
 ggplot(data = krat_subset) +
-  stat_qq(aes(sample = log(seeds))) +  # taking the logarithm of "seeds"
+  stat_qq(aes(sample = log(seeds))) + 
   stat_qq_line(aes(sample = log(seeds)), color = "red") +
   facet_wrap(~ loc)
 ```
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 ```{r}
 var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
 ```
@@ -148,8 +170,15 @@ visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1.
 
 ## Introduction
 
-○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5\
-sentences
+○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
+
+For the second data set, which is the study of individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge (the arctic tundra) we analyzed the data in order to answer the questions, "How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?". Studies show that increased shrub abundance can lead to increased levels of snow which can allow for "higher winter soil temperatures, greater microbial activity, and more plant-available nitrogen. High levels of soil nitrogen favor shrub growth the following summer" (Sturm et al). Each of these characteristics can lead to increased growth in spring and summer, altering species richness and plant community composition. According to Seaver's study from the Environmental Data Initiative, this can therefore effect the reproductive success of plants, which is studied through phenology- the timing of flowering in plants (Seaver). Flowering times are affected by surrounding plant and insect species, and studies show that the most common flowering time of plants is during seasons with higher biodiversity. Increased shrubs would indicate higher rates of flowering. 
+
+Citations:
+
+Matthew Sturm and others, Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland, BioScience, Volume 55, Issue 1, January 2005, Pages 17–26, https://doi.org/10.1641/0006-3568(2005)055[0017:WBPCHC]2.0.CO;2
+
+Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10).
 
 ## Methods
 
@@ -172,76 +201,141 @@ seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 
 ```{r cleaning-the-data}
 seed %>% 
+  #cleaning names
   clean_names()
-
- seed_col <- seed %>% select(species, treatment, nr_seeds, total_nr_infl)
+  #creating new dataframe with columns
+seed_col <- seed %>% 
+  #selecting columns to have in data frame
+  select(species, treatment, nr_seeds, total_nr_infl)
 ```
 
 ```{r missing-data-visualization-(1-4)}
-# visualizing miss data points
+#visualizing miss data points in seeds dataset
 gg_miss_var(seed)
 ```
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
+<<<<<<< HEAD
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
+=======
+<<<<<<< HEAD
+=======
+#create new subset of objects
+>>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
+seed_subset <- seed_col
+#convert Nan values and potential Inf values to NA
+seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
+<<<<<<< HEAD
+>>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 seed_subset <- seed_col %>%
 seed_subset <- seed
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 #seed_subset[drop_na(nr_seeds)]
 seed_subset <- seed %>% 
   drop_na(nr_seeds)
+=======
+#drop na values
+seed_subset <- seed_col %>% drop_na(nr_seeds)
+>>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
 
+#visualize missing data
 gg_miss_var(seed_subset)
+
+#seed_subset$nr_seeds = as.numeric(as.character(seed_subset$nr_seeds)) 
 ```
 
 ```{r null-and-full-models}
-# null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
+#null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
 null <- lm(nr_seeds ~ 1, data = seed_subset)
-# full models includes all variables to assess a linear relationship between each predictor variable and seeds
+#full models includes all variables to assess a linear relationship between each predictor variable and seeds
 full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
 ```
 
 ```{r}
+#create linear model for null model, make all graphs fit into pone 
 null_model <- lm(nr_seeds ~ 1, data = seed_subset)
 par(mfrow = c(2, 2))
+#plot full linear model
 plot(full)
 ```
 
 ```{r}
 #Shapiro-Wilk test 
 check_normality(full)
-# Breusch-Pagan test
+#Breusch-Pagan test
 check_heteroscedasticity(full)
 ```
 
 ```{r}
-# create a new model taking the log of the relationship between total mass and species type
-full_log <- lm(log(nr_seeds) ~ species + total_nr_infl + treatment, data = seed_subset)
-#plotting to visually assess normality and homoscedasticity
+#create a new model taking the log of the relationship between total mass and species type
+#full_log <- lm(log(nr_seeds + .000000000000000000000000000000001) ~ species + total_nr_infl + treatment, data = seed_subset)
+
+full_log <- lm(log(nr_seeds + min(nr_seeds[nr_seeds > 0])) ~ species + total_nr_infl + treatment, data = seed_subset)
+
+#plotting to visually assess normality and homoscedasticity, making all four graphs on one page
 par(mfrow = c(2, 2))
+#plot full graph
 plot(full_log)
 ```
 
 ```{r}
-# Shapiro-Wilk test 
+#Shapiro-Wilk test 
 check_normality(full_log)
-# Breusch-Pagan test
+#Breusch-Pagan test
 check_heteroscedasticity(full_log)
 ```
 
 ```{r explore-data-species}
-ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
+ggplot(data = seed_subset, aes(x = species, y = nr_seeds), na.rm = TRUE) + geom_col()
 ```
 
 ```{r explore-data-inflorescences}
-ggplot(data = seed_subset, aes(x = nr_seeds, y = total_nr_infl), na.rm = TRUE) + geom_col()
+ggplot(data = seed_subset, aes(x = total_nr_infl, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r explore-data plot type}
+ggplot(data = seed_subset, aes(x = treatment, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r}
+#storing our summary model as an object 
+model_summary <- summary(full)
+#storing ANOVA table as an object
+model_anova <- anova(full)
+
+#displaying results from summary using the model object
+model_summary
+model_anova
+```
+
+```{r}
+#creating a table that summarizes the anova table 
+model_anova_table <- tidy(model_anova) %>% 
+    #rounding the statistics, sum of mean squares and sum of squares, to two digits
+    mutate(across(sumsq:meansq, ~ round(.x, digits = 2))) %>% 
+    #round the F-statistic value to have 2 digits
+    mutate(statistic = round(statistic, digits = 2)) %>% 
+    ##replace the p value with < 0.001 rather than a super small number
+    mutate(p.value = case_when(p.value < 0.001 ~ "< 0.001")) %>% 
+    #rename the length to be more proper
+    mutate(term = case_when(term == "length" ~ "Length", TRUE ~ term)) %>% 
+    #create a flex table object from the data frame
+    flextable() %>% 
+    # change the header labels to be meaningful??
+    set_header_labels(df = "Degrees of Freedom", 
+                    sumsq = "Sum of Squares",
+                    meansq = "Mean Squares",
+                    statistic = "F-statistic",
+                    p.value = "P-value")
+
+model_anova_table
 ```
 
 ## Results
 
-○ Interpretation of main results in the context of the system\
-○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.\
-○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption\
+○ Interpretation of main results in the context of the system
+○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
+○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption
 ○ A table (if appropriate) with a caption
