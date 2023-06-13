@@ -77,12 +77,15 @@ var = var(seeds),
 count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
+<<<<<<< HEAD
 summarize(mean_l = mean(seeds),
 sd_l = sd(seeds),
 var_l = var(seeds),
 count_l = length(seeds),
 se_l = sd_l/sqrt(count_l),
 margin_l = qt(0.975, df = count_l - 1) * se_l)
+=======
+>>>>>>> 1ad721e0ba8a12ca74049d2903a6ea1651ad9ef8
 
 krat_subset_summary
 ```
@@ -160,11 +163,9 @@ gg_miss_var(seed)
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-<<<<<<< HEAD
 seed_subset <- seed
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 #seed_subset[drop_na(nr_seeds)]
-=======
 seed_subset <- seed %>% 
   drop_na(nr_seeds)
 
@@ -176,7 +177,6 @@ gg_miss_var(seed_subset)
 null <- lm(nr_seeds ~ 1, data = seed_subset)
 # full models includes all variables to assess a linear relationship between each predictor variable and seeds
 full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
->>>>>>> 4e16dc06327ea6f177414ed18955e9e0f7973ebc
 ```
 
 ```{r}
