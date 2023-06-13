@@ -77,11 +77,28 @@ var_l = var(seeds),
 count_l = length(seeds),
 se_l = sd_l/sqrt(count_l),
 margin_l = qt(0.975, df = count_l - 1) * se_l)
+
+krat_subset_summary
 ```
 
 ```{r}
 ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sample = seeds), color = "orange") + facet_wrap(~ loc)
 ```
+
+```{r}
+ggplot(data = krat_subset) +
+  stat_qq(aes(sample = seeds)) + 
+  stat_qq_line(aes(sample = seeds), color = "red") +
+  facet_wrap(~ loc)
+```
+
+```{r}
+ggplot(data = krat_subset) +
+  stat_qq(aes(sample = seeds) + 
+  stat_qq_line(aes(sample = log(seeds)), color = "red") +
+  facet_wrap(~ loc))
+```
+
 
 mass_var <- var.test(stem_dry_mass ~ watershed, data = maples_2003, conf.level = 0.975)
 mass_var 
