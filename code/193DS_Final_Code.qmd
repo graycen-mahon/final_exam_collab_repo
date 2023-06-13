@@ -229,18 +229,21 @@ seed_1 %>%
 ```{r}
 #cleaning and subsetting data
 #selecting columns to have in data frame
-seed_subset1 <- seed_1 %>%
-  dplyr::select(species, treatment, nr_seeds, total_nr_infl)
+#seed_subset1 <- seed_1 %>%
+  dplyr::select(species, treatment, nr_seeds, total_nr_infl, shrub_num)
 
-seed_col <- seed_subset1
-seed_subset1[is.na(seed_subset1) | seed_subset1 == "Inf"] <- NA 
 
-seed_col1 <- seed_col %>% 
+#seed_col <- seed_subset1
+#seed_subset1[is.na(seed_subset1) | seed_subset1 == "Inf"] <- NA 
+
+seed_col2 <- seed_1
+seed_1[is.na(seed_1) | seed_1 == "Inf"] <- NA 
+
+seed_col3 <- seed_col2 %>% 
   drop_na(nr_seeds)
 
 seed_col1
 ```
-
 
 ```{r}
 ggplot(seed_col1, aes(x = nr_seeds)) +
@@ -260,17 +263,17 @@ seed_mod3 <- glm.nb(nr_seeds ~ species + total_nr_infl + treatment, data = seed_
 seed_mod3.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "nbinom2")
 
 #generalized linear model with Poisson distribution and random effect of site
-seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
-seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
+seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "poisson")
+seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "poisson")
 #use species or treatment for random effect???
 
 #generalized linear model with negative binomial distribution and random effect of site
-seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1)
-seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "nbinom2")
+seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3)
+seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "nbinom2") 
 
-seed_mod55 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|total_nr_infl), data = seed_col1)
 #error for last few models, need numeric data?
 ```
+
 
 Look at Residuals
 ```{r diagnostics}
@@ -297,10 +300,12 @@ plot(simulateResiduals(seed_mod55))
 #Which distribution to use?
 MuMIn::model.sel(seed_mod1, seed_mod2, seed_mod3, seed_mod4, seed_mod5, seed_mod55)
 ```
+
 ```{r}
 #model object
 seed_mod3
 ```
+
 ```{r}
 summary(seed_mod3)
 ```
@@ -343,7 +348,7 @@ seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treat
 
 ```
 
-
+## This is where our second attempt starts
 
 ```{r knitr-example, eval = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
@@ -493,7 +498,6 @@ table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>%
 ```
 
 ## Results
-
 ○ Interpretation of main results in the context of the system
 ○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
 ○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption
