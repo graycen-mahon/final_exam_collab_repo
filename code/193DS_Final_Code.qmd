@@ -71,14 +71,12 @@ krat_subset <- krat %>%
 ```{r}
 krat_subset_summary <- krat_subset %>%
 group_by(loc) %>%
-<<<<<<< HEAD
 summarize(mean = mean(seeds),
 sd = sd(seeds),
 var = var(seeds),
 count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
-=======
 summarize(mean_l = mean(seeds),
 sd_l = sd(seeds),
 var_l = var(seeds),
@@ -87,17 +85,9 @@ se_l = sd_l/sqrt(count_l),
 margin_l = qt(0.975, df = count_l - 1) * se_l)
 
 krat_subset_summary
->>>>>>> b812c364edbe2accc4fb86e50636b9327c27eca7
 ```
 
 ```{r}
-ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sample = seeds), color = "red") + facet_wrap(~ loc)
-```
-
-```{r}
-<<<<<<< HEAD
-mass.var_krat <- var.test(seeds, loc, data = krat_subset, conf.level = 0.975)
-=======
 ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds)) + 
   stat_qq_line(aes(sample = seeds), color = "red") +
@@ -109,12 +99,11 @@ ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds) + 
   stat_qq_line(aes(sample = log(seeds)), color = "red") +
   facet_wrap(~ loc))
->>>>>>> b812c364edbe2accc4fb86e50636b9327c27eca7
 ```
 
-
-mass_var <- var.test(stem_dry_mass ~ watershed, data = maples_2003, conf.level = 0.975)
-mass_var 
+```{r}
+var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
+```
 
 ## Results
 
@@ -167,9 +156,16 @@ gg_miss_var(seed)
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
+<<<<<<< HEAD
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 seed_subset <- seed_col %>%
+=======
+seed_subset <- seed
+seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
+#seed_subset[drop_na(nr_seeds)]
+seed_subset <- seed %>% 
+>>>>>>> 2ef2cb039201b8f5b32ba92273802103a0c88db2
   drop_na(nr_seeds)
 
 gg_miss_var(seed_subset)
@@ -195,7 +191,6 @@ check_normality(full)
 check_heteroscedasticity(full)
 ```
 
-
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
 full_log <- lm(log(nr_seeds) ~ species + total_nr_infl + treatment, data = seed_subset)
@@ -204,7 +199,6 @@ par(mfrow = c(2, 2))
 plot(full_log)
 ```
 
-
 ```{r}
 # Shapiro-Wilk test 
 check_normality(full_log)
@@ -212,10 +206,6 @@ check_normality(full_log)
 check_heteroscedasticity(full_log)
 ```
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
