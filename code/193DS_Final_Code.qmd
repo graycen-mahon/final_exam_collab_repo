@@ -77,6 +77,7 @@ krat_subset <- krat %>%
 
 ```{r}
 log_krat_summary <- log_krat %>%
+  group_by(loc) %>% 
   summarize(
     mean = mean(seeds),
     sd = sd(seeds),
@@ -89,15 +90,9 @@ log_krat_summary
 ```
 
 ```{r}
-summarize(mean_l = mean(seeds),
-sd_l = sd(seeds),
-var_l = var(seeds),
-count_l = length(seeds),
-se_l = sd_l/sqrt(count_l),
-margin_l = qt(0.975, df = count_l - 1) * se_l)
 # create a summary subset of the krat data grouped by location
 # calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
-krat_subset_summary <- krat_subset %>%
+krat_subset_summary2 <- krat_subset %>%
 group_by(loc) %>%
 summarize(mean = mean(seeds),
 sd = sd(seeds),
@@ -106,40 +101,25 @@ count = length(seeds),
 se = sd/sqrt(count),
 margin = qt(0.975, df = count - 1) * se)
 
-log_krat_summary
+krat_subset_summary
 ```
 
 
 ```{r}
-krat_subset_summary <- krat_subset %>%
-summarize(
-  mean = mean(seeds),
-  sd = sd(seeds),
-  var = var(seeds),
-  count = length(seeds),
-  se = sd/sqrt(count),
-  margin = qt(0.975, df = count - 1) * se)
-  summarize(mean_l = mean(seeds),
-  sd_l = sd(seeds),
-  var_l = var(seeds),
-  count_l = length(seeds),
-  se_l = sd_l/sqrt(count_l),
-  margin_l = qt(0.975, df = count_l - 1) * se_l)
-
-krat_subset_summary
+ggplot(data = krat_subset) +
+  stat_qq(aes(sample = seeds)) + 
+  stat_qq_line(aes(sample = seeds), color = "red") +
+  facet_wrap(~ loc)
 ```
 
 ```{r}
 ggplot(data = krat_subset) +
   stat_qq(aes(sample = log(seeds))) + 
-  stat_qq_line(aes(sample = log(seeds)), color = "red") +
+  stat_qq_line(aes(sample = log(seeds)), color = "orange") +
   facet_wrap(~ loc)
 ```
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
 ```{r}
 var_krat <- var.test(loc ~ seeds, data = krat_subset_summary, conf.level = 0.975)
 ```
@@ -168,6 +148,8 @@ Citations:
 Matthew Sturm and others, Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland, BioScience, Volume 55, Issue 1, January 2005, Pages 17–26, https://doi.org/10.1641/0006-3568(2005)055[0017:WBPCHC]2.0.CO;2
 
 Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10).
+
+Wolf, A Amelia and others. Flowering Phenology shifts in Response to Biodiversity Loss (13 March 2017). National Academy of Science. Carnegie Institution of Washington, Stanford, CA. https://www.pnas.org/doi/10.1073/pnas.1608357114 
 
 ## Methods
 
@@ -200,39 +182,25 @@ seed_col <- seed %>%
 
 ```{r missing-data-visualization-(1-4)}
 #visualizing miss data points in seeds dataset
-gg_miss_var(seed)
+gg_miss_var(seed) +
+  labs(caption = "Missing Data in the Seed Dataset") +
+  theme(plot.caption = element_text(hjust = 0.6))
 ```
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
-<<<<<<< HEAD
 seed_subset <- seed_col
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-=======
-<<<<<<< HEAD
-=======
-#create new subset of objects
->>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
-seed_subset <- seed_col
-#convert Nan values and potential Inf values to NA
-seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-<<<<<<< HEAD
->>>>>>> 4692d2f6c6f516120524ad1a3909459fca287539
-seed_subset <- seed_col %>%
-seed_subset <- seed
-seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
-#seed_subset[drop_na(nr_seeds)]
-seed_subset <- seed %>% 
+seed_subset <- seed_col %>% 
   drop_na(nr_seeds)
-=======
-#drop na values
-seed_subset <- seed_col %>% drop_na(nr_seeds)
->>>>>>> 93082ee8761ba332da391d34f53da59cd43432a4
 
 #visualize missing data
-gg_miss_var(seed_subset)
+gg_miss_var(seed_subset) +
+  labs(caption = "Missing Data in the Seed Subset") +
+  theme(plot.caption = element_text(hjust = 0.6))
 
 #seed_subset$nr_seeds = as.numeric(as.character(seed_subset$nr_seeds)) 
+
 ```
 
 ```{r null-and-full-models}
@@ -320,6 +288,24 @@ model_anova_table <- tidy(model_anova) %>%
                     p.value = "P-value")
 
 model_anova_table
+```
+
+```{r}
+#creating a summary table
+table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>% 
+#change low p-values to .001, change all values to round to 3 digits using mutate function
+  mutate(statistic = round(statistic, digits = 3)) %>%
+  mutate(std.error = round(std.error, digits = 3)) %>%
+  mutate(conf.low = round(conf.low, digits = 3)) %>%
+  mutate(conf.high = round(conf.high, digits = 3)) %>%
+  mutate(estimate = round(estimate, digits = 3)) %>%
+  mutate(p.value = case_when(p.value < 0.001 ~ "< 0.001")) %>% 
+#create flextable
+  flextable() %>% 
+#fitting table to viewer
+  autofit()
+#show table 
+  table
 ```
 
 ## Results
