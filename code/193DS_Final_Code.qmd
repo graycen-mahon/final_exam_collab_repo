@@ -69,13 +69,13 @@ gg_miss_var(krat)
 ```
 
 ```{r explore-data}
-# Exploring data with a bar graph 
+# Exploring data with a 
 ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
-```{r select-data}
-# wrangling data to create a new object called krat_subset and select the columns of interest (location and seeds)
+```{r model-object}
+# create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
   dplyr::select("loc", "seeds") 
 ```
@@ -105,7 +105,16 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
+<<<<<<< HEAD
 Poisson Test
+=======
+<<<<<<< HEAD
+Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
+
+```{r kruskal-test}
+=======
+Poisson 
+>>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
 
 ```{r poisson-test}
 rpois(1560, )
@@ -114,17 +123,25 @@ rpois(1560, )
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
+<<<<<<< HEAD
 # Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test 
+=======
+# Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
+<<<<<<< HEAD
+=======
+>>>>>>> ecb47ed641eccec35df6d93bba4fe3ef724f5a41
+>>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
 # Perform Kruskal-Wallis test
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
 
 
 ```{r eta-squared}
-# Comparison of ranks for Kruskal-Wallis test based on H statistic
+# Comparison of ranks for Kruskal Wallis based on H statistic
 rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 small effect size (0.0122)
+
 
 ## Results
 
@@ -212,8 +229,14 @@ seed_1 %>%
 ```{r}
 #cleaning and sub-setting data
 #selecting columns to have in data frame
-coseed_subset1 <- seed_1 %>%
-  dplyr::select(species, treatment, nr_seeds, total_nr_infl, shrub_num)
+seed_subset1 <- seed_1 %>%
+  dplyr::select(species, treatment, nr_seeds, total_nr_infl, nr_infl_coll)
+
+seed_col0 <- seed_subset1
+seed_1[is.na(seed_1) | seed_1 == "Inf"] <- NA 
+
+seed_col1 <- seed_col0 %>% 
+  drop_na(nr_seeds)
 
 
 #seed_col <- seed_subset1
@@ -225,7 +248,8 @@ seed_1[is.na(seed_1) | seed_1 == "Inf"] <- NA
 seed_col3 <- seed_col2 %>% 
   drop_na(nr_seeds)
 
-seed_col1
+#seed_col1
+seed_col3
 ```
 
 ```{r}
@@ -244,19 +268,36 @@ seed_mod2.a <- glm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_c
 #generalized linear model with negative binomial distribution
 seed_mod3 <- glm.nb(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1)
 seed_mod3.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "nbinom2")
+#best
 
 #generalized linear model with Poisson distribution and random effect of site
-seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "poisson")
-seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "poisson")
+seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "poisson")
+seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "poisson")
 #use species or treatment for random effect???
 
 #generalized linear model with negative binomial distribution and random effect of site
-seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3)
-seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "nbinom2") 
+seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1)
+seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "nbinom2") 
 
 #error for last few models, need numeric data?
 ```
 
+```{r}
+check_normality(seed_mod1)
+check_heteroscedasticity(seed_mod1)
+
+check_normality(seed_mod2)
+check_heteroscedasticity(seed_mod2)
+
+check_normality(seed_mod3)
+check_heteroscedasticity(seed_mod3)
+
+check_normality(seed_mod4)
+check_heteroscedasticity(seed_mod4)
+
+check_normality(seed_mod5)
+check_heteroscedasticity(seed_mod5)
+```
 
 Look at Residuals
 ```{r diagnostics}
@@ -328,12 +369,176 @@ ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
   labs(fill = "Mined", color = "Mined")
 
 seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
-
 ```
 
 ## This is where our second attempt starts (stored in test code)
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r knitr-example, eval = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+# suppress any messages from R using the code chunk above, setting messages and warnings to false}
+```
+
+```{r reading-in-the-dataset}
+#reading in the data sets for problem 2
+seed <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
+```
+
+```{r cleaning-the-data}
+seed %>% 
+  #cleaning names
+  clean_names()
+  #creating new dataframe with columns
+seed_col <- seed %>% 
+  #selecting columns to have in data frame
+  select(species, treatment, nr_seeds, total_nr_infl)
+```
+
+```{r missing-data-visualization-(1-4)}
+#visualizing miss data points in seeds dataset
+gg_miss_var(seed) +
+  labs(caption = "Missing Data in the Seed Dataset") +
+  theme(plot.caption = element_text(hjust = 0.6))
+```
+
+```{r}
+#creating a seed subset object and dropping na values from the table
+seed_subset <- seed_col
+seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
+seed_subset <- seed_col %>% 
+  drop_na(nr_seeds)
+
+#visualize missing data
+gg_miss_var(seed_subset) +
+  labs(caption = "Missing Data in the Seed Subset") +
+  theme(plot.caption = element_text(hjust = 0.6))
+#seed_subset$nr_seeds = as.numeric(as.character(seed_subset$nr_seeds)) 
+
+```
+
+```{r null-and-full-models}
+#null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
+null <- lm(nr_seeds ~ 1, data = seed_subset)
+#full models includes all variables to assess a linear relationship between each predictor variable and seeds
+full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
+```
+
+```{r}
+#create linear model for null model, make all graphs fit into pone 
+null_model <- lm(nr_seeds ~ 1, data = seed_subset)
+par(mfrow = c(2, 2))
+#plot full linear model
+plot(full)
+```
+
+```{r}
+#Shapiro-Wilk test 
+check_normality(full)
+#Breusch-Pagan test
+check_heteroscedasticity(full)
+```
+
+```{r}
+#create a new model taking the log of the relationship between total mass and species type
+#full_log <- lm(log(nr_seeds + .000000000000000000000000000000001) ~ species + total_nr_infl + treatment, data = seed_subset)
+
+full_log <- lm(log(nr_seeds + min(nr_seeds[nr_seeds > 0])) ~ species + total_nr_infl + treatment, data = seed_subset)
+
+#plotting to visually assess normality and homoscedasticity, making all four graphs on one page
+par(mfrow = c(2, 2))
+#plot full graph
+plot(full_log)
+```
+
+```{r}
+#Shapiro-Wilk test 
+check_normality(full_log)
+#Breusch-Pagan test
+check_heteroscedasticity(full_log)
+```
+
+```{r explore-data-species}
+ggplot(data = seed_subset, aes(x = species, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r explore-data-inflorescences}
+ggplot(data = seed_subset, aes(x = total_nr_infl, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r explore-data plot type}
+ggplot(data = seed_subset, aes(x = treatment, y = nr_seeds), na.rm = TRUE) + geom_col()
+```
+
+```{r}
+#storing our summary model as an object 
+model_summary <- summary(full)
+#storing ANOVA table as an object
+model_anova <- anova(full)
+
+#displaying results from summary using the model object
+model_summary
+model_anova
+```
+
+```{r}
+#creating a table that summarizes the anova table 
+model_anova_table <- tidy(model_anova) %>% 
+    #rounding the statistics, sum of mean squares and sum of squares, to two digits
+    mutate(across(sumsq:meansq, ~ round(.x, digits = 2))) %>% 
+    #round the F-statistic value to have 2 digits
+    mutate(statistic = round(statistic, digits = 2)) %>% 
+    ##replace the p value with < 0.001 rather than a super small number
+    mutate(p.value = case_when(p.value < 0.001 ~ "< 0.001")) %>% 
+    #rename the length to be more proper
+    mutate(term = case_when(term == "length" ~ "Length", TRUE ~ term)) %>% 
+    #create a flex table object from the data frame
+    flextable() %>% 
+    # change the header labels to be meaningful??
+    set_header_labels(df = "Degrees of Freedom", 
+                    sumsq = "Sum of Squares",
+                    meansq = "Mean Squares",
+                    statistic = "F-statistic",
+                    p.value = "P-value")
+
+model_anova_table
+```
+
+```{r}
+#creating a summary table
+table <- tidy(model_summary, conf.int = TRUE, exponentiate = TRUE) %>% 
+#change low p-values to .001, change all values to round to 3 digits using mutate function
+  mutate(statistic = round(statistic, digits = 3)) %>%
+  mutate(std.error = round(std.error, digits = 3)) %>%
+  mutate(conf.low = round(conf.low, digits = 3)) %>%
+  mutate(conf.high = round(conf.high, digits = 3)) %>%
+  mutate(estimate = round(estimate, digits = 3)) %>%
+  mutate(p.value = case_when(p.value < 0.001 ~ "< 0.001")) %>% 
+#create flextable
+  flextable() %>% 
+#fitting table to viewer
+  autofit()
+#show table 
+  table
+```
+
+>>>>>>> 15bda1756c072ea233c8d6c10384834fefcd1271
 ## Results
 ○ Interpretation of main results in the context of the system
 ○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
