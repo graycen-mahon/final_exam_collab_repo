@@ -16,16 +16,14 @@ https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 
 ## Introduction
 
-○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5\
-sentences
+○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
 
 For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?".
 
 ## Methods
-
-○ Any cleaning and wrangling steps\
-○ Assumption checks\
-○ Statistical tests and null hypotheses\
+○ Any cleaning and wrangling steps
+○ Assumption checks
+○ Statistical tests and null hypotheses
 ○ Citations for packages, software, data, or other steps
 
 ```{r loading-in-packages1}
@@ -42,6 +40,8 @@ library(corrplot)
 library(AICcmodavg)
 library(GGally)
 ```
+
+## Exercise 1
 
 ```{r read-data}
 # checking to make sure the "here" package is starting at the correct directory
@@ -61,22 +61,34 @@ gg_miss_var(krat)
 ggplot(data = krat, aes(x = mnd, y = seeds)) +
   geom_col()
 ```
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 
 ```{r model-object}
-krat_modelobject <- lm(mnd ~ seeds, data = krat)
+# create a new object called krat subset and select the columns of interest (location and seeds)
+krat_subset <- krat %>% 
+  select("loc", "seeds")
 ```
 
-```{r plot-assumptions}
-# makes the viewer pane show a 2x2 grid of plots
-# format: par(mfrow = c(number of rows, number of columns))
-par(mfrow = c(2, 2))
-plot(krat_modelobject)
+```{r}
+krat_subset_summary <- krat_subset %>%
+group_by(loc) %>%
+summarize(mean_l = mean(seeds),
+sd_l = sd(seeds),
+var_l = var(seeds),
+count_l = length(seeds),
+se_l = sd_l/sqrt(count_l),
+margin_l = qt(0.975, df = count_l - 1) * se_l)
 ```
 
-```{r dev-off}
-# turns off the 2x2 grid - pop this under the code chunk where you set the 2x2 grid
-dev.off()
+```{r}
+ggplot(data = krat_subset) + stat_qq(aes(sample = seeds)) + stat_qq_line(aes(sample = seeds), color = "orange") + facet_wrap(~ loc)
 ```
+
+mass_var <- var.test(stem_dry_mass ~ watershed, data = maples_2003, conf.level = 0.975)
+mass_var 
 
 ## Results
 
@@ -128,21 +140,38 @@ gg_miss_var(seed)
 
 ```{r}
 # creating a seed subset object and dropping na values from the table
+<<<<<<< HEAD
 seed_subset <- seed
 seed_subset[is.na(seed_subset) | seed_subset == "Inf"] <- NA 
 #seed_subset[drop_na(nr_seeds)]
+=======
+seed_subset <- seed %>% 
+  drop_na(nr_seeds)
+
+gg_miss_var(seed_subset)
+```
+
+```{r null-and-full-models}
+# null model assigns the value of the predicted variable, seeds, to 1 so it is being modeled as a function of a constant term
+null <- lm(nr_seeds ~ 1, data = seed_subset)
+# full models includes all variables to assess a linear relationship between each predictor variable and seeds
+full <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
+>>>>>>> 4e16dc06327ea6f177414ed18955e9e0f7973ebc
 ```
 
 ```{r}
 null_model <- lm(nr_seeds ~ 1, data = seed_subset)
+par(mfrow = c(2, 2))
+plot(full)
 ```
 
-```{r model-object-species}
-seed_model_object <-lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_subset)
-plot(seed_model_object)
+```{r}
+#Shapiro-Wilk test 
+check_normality(full)
+# Breusch-Pagan test
+check_heteroscedasticity(full)
 ```
 
-<<<<<<< HEAD
 
 ```{r}
 # create a new model taking the log of the relationship between total mass and species type
@@ -160,9 +189,10 @@ check_normality(full_log)
 check_heteroscedasticity(full_log)
 ```
 
+<<<<<<< HEAD
 
 =======
->>>>>>> f763bbac2c62cc5f0cb063a5223bf13173f318ba
+>>>>>>> 0b778e4bf1d9e846e9849c81bdea918870aa1437
 ```{r explore-data-species}
 ggplot(data = seed_subset, aes(x = nr_seeds, y = species), na.rm = TRUE) + geom_col()
 ```
