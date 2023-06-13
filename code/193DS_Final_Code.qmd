@@ -69,13 +69,13 @@ gg_miss_var(krat)
 ```
 
 ```{r explore-data}
-# Exploring data with a bar graph 
+# Exploring data with a 
 ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
-```{r select-data}
-# wrangling data to create a new object called krat_subset and select the columns of interest (location and seeds)
+```{r model-object}
+# create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
   dplyr::select("loc", "seeds") 
 ```
@@ -105,27 +105,20 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
-Poisson 
-
-```{r}
-rpois(lambda)
-```
-
-
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
 ```{r kruskal-test}
-# Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
 # Perform Kruskal-Wallis test
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
 
 
 ```{r eta-squared}
-# Comparison of ranks for Kruskal-Wallis test based on H statistic
+# Comparison of ranks for Kruskal Wallis based on H statistic
 rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 small effect size (0.0122)
+
 
 ## Results
 
@@ -213,8 +206,14 @@ seed_1 %>%
 ```{r}
 #cleaning and sub-setting data
 #selecting columns to have in data frame
-coseed_subset1 <- seed_1 %>%
-  dplyr::select(species, treatment, nr_seeds, total_nr_infl, shrub_num)
+seed_subset1 <- seed_1 %>%
+  dplyr::select(species, treatment, nr_seeds, total_nr_infl, nr_infl_coll)
+
+seed_col0 <- seed_subset1
+seed_1[is.na(seed_1) | seed_1 == "Inf"] <- NA 
+
+seed_col1 <- seed_col0 %>% 
+  drop_na(nr_seeds)
 
 
 #seed_col <- seed_subset1
@@ -226,7 +225,8 @@ seed_1[is.na(seed_1) | seed_1 == "Inf"] <- NA
 seed_col3 <- seed_col2 %>% 
   drop_na(nr_seeds)
 
-seed_col1
+#seed_col1
+seed_col3
 ```
 
 ```{r}
@@ -245,19 +245,36 @@ seed_mod2.a <- glm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_c
 #generalized linear model with negative binomial distribution
 seed_mod3 <- glm.nb(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1)
 seed_mod3.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "nbinom2")
+#best
 
 #generalized linear model with Poisson distribution and random effect of site
-seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "poisson")
-seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "poisson")
+seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "poisson")
+seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "poisson")
 #use species or treatment for random effect???
 
 #generalized linear model with negative binomial distribution and random effect of site
-seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3)
-seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col3, family = "nbinom2") 
+seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1)
+seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "nbinom2") 
 
 #error for last few models, need numeric data?
 ```
 
+```{r}
+check_normality(seed_mod1)
+check_heteroscedasticity(seed_mod1)
+
+check_normality(seed_mod2)
+check_heteroscedasticity(seed_mod2)
+
+check_normality(seed_mod3)
+check_heteroscedasticity(seed_mod3)
+
+check_normality(seed_mod4)
+check_heteroscedasticity(seed_mod4)
+
+check_normality(seed_mod5)
+check_heteroscedasticity(seed_mod5)
+```
 
 Look at Residuals
 ```{r diagnostics}
@@ -329,10 +346,11 @@ ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
   labs(fill = "Mined", color = "Mined")
 
 seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
-
 ```
 
 ## This is where our second attempt starts
+
+
 
 
 
