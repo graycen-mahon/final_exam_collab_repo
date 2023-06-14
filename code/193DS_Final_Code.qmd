@@ -67,11 +67,6 @@ gg_miss_var(krat)
 #nothing missing!
 ```
 
-```{r model-object}
-# create a new object called krat subset and select the columns of interest (location and seeds)
-krat_subset <- krat %>% 
-  dplyr::select("loc", "seeds")
-```
 
 ```{r explore-data}
 # Exploring data with a bar graph
@@ -82,7 +77,7 @@ ggplot(data = krat, aes(x = loc, y = seeds)) +
 
 ```{r}
 # create a summary subset of the krat data grouped by location and calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
-krat_subset_summary <- krat_subset1 %>% 
+krat_subset_summary <- krat_subset %>% 
   group_by(loc) %>% 
   summarize(mean = mean(seeds),
             median = median(seeds),
@@ -100,22 +95,6 @@ krat_subset <- krat %>%
   dplyr::select("loc", "seeds") 
 ```
 
-
-```{r data-summary}
-# create a summary subset of the krat data grouped by location
-# calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
-krat_subset_summary <- krat_subset %>%
-group_by(loc) %>% 
-  mean = mean(seeds)
-  median = median(seeds)
-  sd = sd(seeds)
-  var = var(seeds)
-  count = length(seeds)
-  se = sd/sqrt(count)
-  margin = qt(0.975, df = count - 1) * se
-
-krat_subset_summary
-```
 
 ```{r check-normality}
 #check for normality in the data 
