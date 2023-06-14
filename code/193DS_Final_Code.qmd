@@ -76,11 +76,12 @@ krat_subset1 <- subset(krat_subset, !(loc %in% c("I", "E")))
 ```
 
 ```{r explore-data}
-# Exploring data with a 
-ggplot(data = krat_subset1, aes(x = loc, y = seeds)) +
+# Exploring data with a bar graph
+ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
+<<<<<<< HEAD
 ```{r}
 # create a summary subset of the krat data grouped by location and calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
 krat_subset_summary <- krat_subset1 %>% 
@@ -92,32 +93,72 @@ krat_subset_summary <- krat_subset1 %>%
             count = length(seeds),
             se = sd/sqrt(count),
             margin = qt(0.975, df = count - 1) * se)
+=======
+
+```{r model-object}
+# create a new object called krat subset and select the columns of interest (location and seeds)
+krat_subset <- krat %>% 
+  dplyr::select("loc", "seeds") 
+```
+
+
+```{r data-summary}
+# create a summary subset of the krat data grouped by location
+# calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
+krat_subset_summary <- krat_subset %>%
+group_by(loc) %>% 
+  mean = mean(seeds)
+  median = median(seeds)
+  sd = sd(seeds)
+  var = var(seeds)
+  count = length(seeds)
+  se = sd/sqrt(count)
+  margin = qt(0.975, df = count - 1) * se
+
+>>>>>>> bf9ebecab993ff85bed4fd25c359809bd3bbfcda
 krat_subset_summary
 ```
 
 ```{r check-normality}
 #check for normality in the data 
-ggplot(data = krat_subset1) +
+ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds)) + 
   stat_qq_line(aes(sample = seeds), color = "red") +
   facet_wrap(~ loc)
 ```
 
+<<<<<<< HEAD
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
+=======
+Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. A Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
+
+
+Assumptions of a Kruskal-Wallis test: 
+* Independent observations: Observations within each group (B, S, E, and I) are completely independent of each other. Observations in one group are not influenced by observations in any of the other groups. 
+
+* Similar shape of distributions:
+
+* Homogeneity of variances:
+
+* Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
+
+
+>>>>>>> bf9ebecab993ff85bed4fd25c359809bd3bbfcda
 
 ```{r kruskal-test}
 kruskal.test(seeds ~ loc, data = krat_subset)
+<<<<<<< HEAD
 # Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
+=======
+>>>>>>> bf9ebecab993ff85bed4fd25c359809bd3bbfcda
 ```
 
 
 ```{r eta-squared}
 # Comparison of ranks for Kruskal Wallis based on H statistic
-rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset1)
+rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 small effect size (0.0128)
-
-
 
 
 ## Results
@@ -327,7 +368,7 @@ ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
   geom_point(aes(color = treatment), alpha = 0.5) +
   facet_wrap(~species, scales = "free_y") +
   geom_line(data = seed_predictions, aes(x = x, y = Predicted, color = treatment)) +
-  geom_ribbon(data = seed_predictions, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high, fill = mined), alpha = 0.2) +
+  geom_ribbon(data = seed_predictions, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high, fill = treatment), alpha = 0.2) +
   scale_fill_manual(values = c("yes" = "blue", "no" = "orange")) +
   scale_color_manual(values = c("yes" = "blue", "no" = "orange")) +
   theme_bw() +
