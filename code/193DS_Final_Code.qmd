@@ -110,9 +110,12 @@ Running a Kruskal-Wallis test to compare the seed count data for four different 
 
 
 Assumptions of a Kruskal-Wallis test: 
-* Independent observations: 
+* Independent observations: Observations within each group (B, S, E, and I) are completely independent of each other. Observations in one group are not influenced by observations in any of the other groups. 
+
 * Similar shape of distributions:
+
 * Homogeneity of variances:
+
 * Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
 
 
