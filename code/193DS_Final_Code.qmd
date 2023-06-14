@@ -303,6 +303,7 @@ plot(simulateResiduals(seed_mod2))
 
 ```{r diagnostics-model-3}
 plot(simulateResiduals(seed_mod3))
+log(seed_mod3)
 ```
 
 ```{r diagnostics-model-4}
