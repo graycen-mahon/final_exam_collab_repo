@@ -16,7 +16,6 @@ editor: visual
 
 # Introduction:
 
-```         
 - Perennial species often have short lived seed banks
 - Annual plants have long lived seed banks
 - Seed germination can be primarily maintained below ground
