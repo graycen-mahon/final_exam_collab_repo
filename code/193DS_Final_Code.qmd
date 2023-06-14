@@ -133,13 +133,12 @@ leveneTest(seeds ~ loc, data = krat_subset)
 * Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
 
 
-
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
 
 ```{r kruskal-test}
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
-
+very low p-value indicating seed count does differ between mound locations. 
 
 ```{r eta-squared}
 # Comparison of ranks for Kruskal Wallis based on H statistic
