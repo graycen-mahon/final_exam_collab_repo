@@ -71,8 +71,6 @@ gg_miss_var(krat)
 # create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
   dplyr::select("loc", "seeds")
-
-krat_subset1 <- subset(krat_subset, !(loc %in% c("I", "E")))
 ```
 
 ```{r explore-data}
