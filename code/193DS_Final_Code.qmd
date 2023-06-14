@@ -274,11 +274,6 @@ seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_inf
 #error for last few models, need numeric data?
 ```
 
-```{r checking-for-normality-and-herterosked-in-the-linear-model}
-check_normality(seed_mod1)
-check_heteroscedasticity(seed_mod1)
-```
-
 Look at Residuals
 ```{r diagnostics-model-2}
 plot(simulateResiduals(seed_mod2))
@@ -332,21 +327,17 @@ seed_mod3 %>%
 ```
 
 ```{r}
-seed_predictions <- ggpredict(seed_mod3, terms = c("species", "total_nr_infl", "treatment")) %>% 
+seed_predictions <- ggpredict(seed_mod3, terms = c("total_nr_infl", "treatment",  "species")) %>% 
   rename(treatment = group,
          species = facet)
-
-plot(seed_predictions)
-
 seed_predictions
 
 ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
   geom_point(aes(color = treatment), alpha = 0.5) +
   facet_wrap(~species, scales = "free_y") +
-  geom_line(data = seed_predictions, aes(x = x, y = nr_seeds, color = treatment)) +
-  geom_ribbon(data = seed_predictions, aes(x = x, y = Predicted, ymin = conf.low, ymax = conf.high, fill = treatment), alpha = 0.2) +
-  scale_fill_manual(values = c("yes" = "blue", "no" = "orange")) +
-  scale_color_manual(values = c("yes" = "blue", "no" = "orange")) +
+  geom_line(data = seed_predictions, aes(x = x, y = predicted, color = treatment)) + geom_ribbon(data = seed_predictions, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high, fill = treatment), alpha = 0.2) +
+  scale_fill_manual(values = c("shrub" = "blue", "control" = "orange")) +
+  scale_color_manual(values = c("shrub" = "blue", "control" = "orange")) +
   theme_bw() +
   facet_wrap(~species, scales = "free_y") +
   labs(fill = "Mined", color = "Mined")

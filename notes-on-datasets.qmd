@@ -16,18 +16,17 @@ editor: visual
 
 # Introduction:
 
-- Perennial species often have short lived seed banks
-- Annual plants have long lived seed banks
-- Seed germination can be primarily maintained below ground
-    - Important for species in the deserts of southwestern North America where banks are preserved below ground for drought tolerance
--  annual plant cover is higher on mounds than off mounds
-- soil on the mounds had higher concentration of nitrogen, lower water availability after rainfall than non-mound soil
-- kR activity affects seed banks in many ways:
-    - mounds have a wide variety of plant species that drop their seeds close to "home" and therefore deposit a large proportion of their seeds into the seed bank in the mound.
-    - KR seed caching and selective foraging can change seed distributions and densities in plant communities
-- they surveyed parts of the see band in the Chihuahuan desert grassland to understand the impact of banner tail KR mounds on plant communities
-- they predicted that the 8 plant taxa will have seeds banks that differ between mounds and also off mounds. Mounds will have high seed numbers of early successional plant species. 
-```
+-   Perennial species often have short lived seed banks
+-   Annual plants have long lived seed banks
+-   Seed germination can be primarily maintained below ground
+    -   Important for species in the deserts of southwestern North America where banks are preserved below ground for drought tolerance
+-   annual plant cover is higher on mounds than off mounds
+-   soil on the mounds had higher concentration of nitrogen, lower water availability after rainfall than non-mound soil
+-   kR activity affects seed banks in many ways:
+    -   mounds have a wide variety of plant species that drop their seeds close to "home" and therefore deposit a large proportion of their seeds into the seed bank in the mound.
+    -   KR seed caching and selective foraging can change seed distributions and densities in plant communities
+-   they surveyed parts of the see band in the Chihuahuan desert grassland to understand the impact of banner tail KR mounds on plant communities
+-   they predicted that the 8 plant taxa will have seeds banks that differ between mounds and also off mounds. Mounds will have high seed numbers of early successional plant species. \`\`\`
 
 # Study Site
 
