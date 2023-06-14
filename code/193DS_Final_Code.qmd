@@ -74,6 +74,11 @@ ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
+```{r model-object}
+# create a new object called krat subset and select the columns of interest (location and seeds)
+krat_subset <- krat %>% 
+  dplyr::select("loc", "seeds") 
+```
 
 ```{r}
 # create a summary subset of the krat data grouped by location and calculate mean, standard deviation, variance, count, standard error, and margin of error for seeds for each location
@@ -89,13 +94,6 @@ krat_subset_summary <- krat_subset %>%
 ```
 
 
-```{r model-object}
-# create a new object called krat subset and select the columns of interest (location and seeds)
-krat_subset <- krat %>% 
-  dplyr::select("loc", "seeds") 
-```
-
-
 ```{r check-normality}
 #check for normality in the data 
 ggplot(data = krat_subset) +
@@ -104,6 +102,9 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
+## Methods:
+
+In order to properly analyse and organize the data set, we first began by reading in the data file using the csv function and saving data within an object named "krat"- as in Kangaroo Rat. Next, we made a missing data visualization of the krat data set so we could view the missing data from the frame. As seen in the visualization, there are no missing observations for the Kangaroo Rat data set. After determining this, t
 
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
 
