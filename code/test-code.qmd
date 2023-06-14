@@ -3,6 +3,9 @@ title: "test-code"
 format: html
 editor: visual
 ---
+
+This is code we tested out & were not sure baout using. We did not want to delete it entirely jsut in case, and we have stored it in here. 
+
 ## Problem 1
 
 ```{r}
