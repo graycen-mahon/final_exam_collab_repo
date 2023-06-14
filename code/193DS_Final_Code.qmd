@@ -16,8 +16,6 @@ https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 
 ## Introduction
 
-○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
-
 For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?". Studies have shown that rodents, such as kangaroo rats, are important in seed dispersal and therefore the survival of different plant species while reducing water usage in drought ridden areas (Beck). In areas with high rates of drought, and low rodent populations, seed dispersal is less productive and therefore many plant species become endangered. Drought causes a decrease in seed and plant release height, which decreases seed terminal velocity and therefore possibility of germination (Johnson et al). It is important to study the effectiveness of kangaroo rat seed dispersal and the content of seed banks on kangaroo rat mounds for ecological purposes. The results of this study will allow for a better understanding of whether or not kangaroo rats are beneficial or harmful to the longevity of plant species. 
 
 Citations:
@@ -27,11 +25,14 @@ Johnson JS, Cantrell RS, Cosner C, Hartig F, Hastings A, Rogers HS, Schupp EW, S
 
 Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative. https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597 (Accessed 2023-06-10).
 
-## Methods
-○ Any cleaning and wrangling steps
-○ Assumption checks
-○ Statistical tests and null hypotheses
+## Methods (code):
+○ Any cleaning and wrangling steps ✅
+○ Assumption checks ✅
+○ Statistical tests and null hypotheses ✅
 ○ Citations for packages, software, data, or other steps
+
+H0: All ranks are equal (no difference in medians)
+HA: At least two ranks differ (at least one difference in group medians)
 
 ```{r loading-in-packages1}
 library(tidyverse)
@@ -74,9 +75,12 @@ ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
+
+The only thing we did to wrangle the data was to select only the mound location and seed count fields that we needed for our analysis. 
 ```{r model-object}
-# create a new object called krat subset and select the columns of interest (location and seeds)
+# create a new object called krat subset 
 krat_subset <- krat %>% 
+  # select the columns of interest (mound location and seed count)
   dplyr::select("loc", "seeds") 
 ```
 
@@ -92,12 +96,13 @@ krat_subset_summary <- krat_subset %>%
             se = sd/sqrt(count),
             margin = qt(0.975, df = count - 1) * se)
 
+# Display summary statistics
 krat_subset_summary
 ```
 
 
 ```{r check-normality}
-#check for normality in the data 
+#check the distribution of the data grouped by mound location
 ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds)) + 
   stat_qq_line(aes(sample = seeds), color = "red") +
@@ -134,6 +139,10 @@ leveneTest(seeds ~ loc, data = krat_subset)
 * Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
 
 
+Categorical predictor variables: The predictor variables are the mound location, which are categorical data because the mound locations are identified based on four different labels. 
+
+Each group should have at least 5 observations: Yes. 
+
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
 
 ```{r kruskal-test}
@@ -162,8 +171,6 @@ visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1.
 **Questions:** How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?
 
 ## Introduction
-
-○ To your specific analysis (biology or otherwise) with 3-5 citations (3-5 sentences)
 
 For the second data set, which is the study of individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge (the arctic tundra) we analyzed the data in order to answer the questions, "How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?". Studies show that increased shrub abundance can lead to increased levels of snow which can allow for "higher winter soil temperatures, greater microbial activity, and more plant-available nitrogen. High levels of soil nitrogen favor shrub growth the following summer" (Sturm et al). Each of these characteristics can lead to increased growth in spring and summer, altering species richness and plant community composition. According to Seaver's study from the Environmental Data Initiative, this can therefore effect the reproductive success of plants, which is studied through phenology- the timing of flowering in plants (Seaver). Flowering times are affected by surrounding plant and insect species, and studies show that the most common flowering time of plants is during seasons with higher biodiversity. Increased shrubs would indicate higher rates of flowering. 
 
