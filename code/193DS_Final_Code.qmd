@@ -86,6 +86,8 @@ krat_subset_summary <- krat_subset %>%
             count = length(seeds),
             se = sd/sqrt(count),
             margin = qt(0.975, df = count - 1) * se)
+
+krat_subset_summary
 ```
 
 
@@ -103,6 +105,8 @@ ggplot(data = krat_subset) +
   stat_qq_line(aes(sample = seeds), color = "red") +
   facet_wrap(~ loc)
 ```
+Distributions are not normal, all distributions look mostly like a flat line that increase exponentially/rapidly as you get more positive standard deviations away. Distributions are all similar. 
+
 
 
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
@@ -113,9 +117,18 @@ Running a Kruskal-Wallis test to compare the seed count data for four different 
 Assumptions of a Kruskal-Wallis test: 
 * Independent observations: Observations within each group (B, S, E, and I) are completely independent of each other. Observations in one group are not influenced by observations in any of the other groups. 
 
-* Similar shape of distributions:
+* Similar shape of distributions: Distribution shape was checked using a QQ-plot for each of the mound locations and all distributions were visually similar. All distributions look relatively flat. After 2 standard deviations away from the mean, the data points rapidly increase. 
 
-* Homogeneity of variances:
+* Homogeneity of variances: If there is homogeneity of variances, the dependent variable across the groups being compared should be similar.We ran a levene test using seeds as the dependent variable and mound location as the grouping variable to test for homogeneity of variances. The significant p-value of 2.66e-09 indicates that there is not homogeneity of variances, but, since the Kruskal-Wallis test is non-parametric, it is less sensitive to violations of this assumption and can still be used. 
+
+
+```{r}
+# Using krat_subset as dataframe and dependent variable 'seeds' and a grouping variable 'loc'
+library(car)
+
+# Perform Levene's test
+leveneTest(seeds ~ loc, data = krat_subset)
+```
 
 * Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
 
