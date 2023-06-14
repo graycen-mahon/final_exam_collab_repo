@@ -68,21 +68,16 @@ gg_miss_var(krat)
 ```
 
 ```{r explore-data}
-# Exploring data with a 
-ggplot(data = krat_subset1, aes(x = loc, y = seeds)) +
+# Exploring data with a bar graph
+ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
+
 
 ```{r model-object}
 # create a new object called krat subset and select the columns of interest (location and seeds)
 krat_subset <- krat %>% 
-<<<<<<< HEAD
-  dplyr::select("loc", "seeds")
-=======
   dplyr::select("loc", "seeds") 
-
-  krat_subset1 <- subset(krat_subset, !(loc %in% c("I", "E")))
->>>>>>> 892a55840d40899199f8436162d9e3b1de495732
 ```
 
 
@@ -105,37 +100,36 @@ krat_subset_summary
 
 ```{r check-normality}
 #check for normality in the data 
-ggplot(data = krat_subset1) +
+ggplot(data = krat_subset) +
   stat_qq(aes(sample = seeds)) + 
   stat_qq_line(aes(sample = seeds), color = "red") +
   facet_wrap(~ loc)
 ```
 
-<<<<<<< HEAD
-Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds 
+Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. A Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
+
+
+Assumptions of a Kruskal-Wallis test: 
+* Independent observations: Observations within each group (B, S, E, and I) are completely independent of each other. Observations in one group are not influenced by observations in any of the other groups. 
+
+* Similar shape of distributions:
+
+* Homogeneity of variances:
+
+* Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
+
+
 
 ```{r kruskal-test}
 # Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
 kruskal.test(seeds ~ loc, data = krat_subset)
-=======
-Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
-
-
-
-```{r kruskal-test}
-# Perform Kruskal-Wallis test to compare the difference in medians using a ranked-sign test
-# Perform Kruskal-Wallis test
-kruskal.test(seeds ~ loc, data = krat_subset1)
->>>>>>> 892a55840d40899199f8436162d9e3b1de495732
 ```
 
 ```{r eta-squared}
 # Comparison of ranks for Kruskal Wallis based on H statistic
-rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset1)
+rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 small effect size (0.0128)
-
-
 
 
 ## Results
