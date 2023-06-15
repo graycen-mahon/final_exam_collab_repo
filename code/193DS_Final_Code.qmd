@@ -184,8 +184,6 @@ library(GGally)
 library(flextable)
 ```
 
-Redoing problem 2 based on workshop 10
-
 ```{r knitr-example, eval = FALSE}
 #suppresses messages from R, set messages and warning to false
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
