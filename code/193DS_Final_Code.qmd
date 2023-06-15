@@ -4,7 +4,7 @@ authors: Graycen Mahon, Benise Limon, Kiya Pupa
 date: "2023-06-12"
 output:
   html_document:
-    code_folding: hide
+    code_folding: true
 ---
 
 # Problem 1
