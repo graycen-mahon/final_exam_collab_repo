@@ -16,30 +16,27 @@ https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597\
 
 ## Introduction
 
-For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?". Studies have shown that rodents, such as kangaroo rats, are important in seed dispersal and therefore the survival of different plant species while reducing water usage in drought ridden areas (Beck). In areas with high rates of drought, and low rodent populations, seed dispersal is less productive and therefore many plant species become endangered. Drought causes a decrease in seed and plant release height, which decreases seed terminal velocity and therefore possibility of germination (Johnson et al). It is important to study the effectiveness of kangaroo rat seed dispersal and the content of seed banks on kangaroo rat mounds for ecological purposes. The results of this study will allow for a better understanding of whether or not kangaroo rats are beneficial or harmful to the longevity of plant species. 
+For the first data set which is the study of the effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico, we analyzed the data in order to answer the question, "How does the total seed number differ between kangaroo rat mound locations?". Studies have shown that rodents, such as kangaroo rats, are important in seed dispersal and therefore the survival of different plant species while reducing water usage in drought ridden areas (Beck). In areas with high rates of drought, and low rodent populations, seed dispersal is less productive and therefore many plant species become endangered. Drought causes a decrease in seed and plant release height, which decreases seed terminal velocity and therefore possibility of germination (Johnson et al). It is important to study the effectiveness of kangaroo rat seed dispersal and the content of seed banks on kangaroo rat mounds for ecological purposes. The results of this study will allow for a better understanding of whether or not kangaroo rats are beneficial or harmful to the longevity of plant species.
 
-Methods (code):
-○ Citations for packages, software, data, or other steps
+Methods (code): ○ Citations for packages, software, data, or other steps
 
 ## Methods:
 
 In order to properly analyze and organize the data set, we first began by reading in the data file using the csv function and saving data within an object named "krat"- as in Kangaroo Rat. The hypotheses we are testing are as follows:
 
-H0: All ranks are equal (no difference in medians)
-HA: At least two ranks differ (at least one difference in group medians)
+H0: All ranks are equal (no difference in medians) HA: At least two ranks differ (at least one difference in group medians)
 
-The null hypothesis, in biological terms, is that there is not relationship in seed count and mound location, with seed count being random whereas the alternative hypothesis predicts that mound location is a significant predictor of seed count, with seed count increasing or decreasing according to mound location. After reading in the data and determining our hypothesis, we made a missing data visualization of the krat data set so we could view the missing data from the frame. As seen in the visualization, there are no missing observations for the Kangaroo Rat data set. After determining this, we then created a data visualization using a bar graph with location of the kangaroo rat mound on the x axis and seed count on the y axis. The Kangaroo Rat data set is a chart of the observations made for the study with the columns being; mound (mnd), direction (dir), location (loc), species (species), and seed number (seeds). There are a total of 1560 observations, spanning different mounds and on a different location for each mound. The mound locations used for the study are as follows; around the base of the mound (B), surrounding area of the mount (D), edge of Bouteloua eriopoda grass (E) and the inter space between the Bouteloua eriopoda grass (I). In order to wrangle and clean the data set to show only the observations needed for the purpose of our analysis, we created a krat_subset object and used the dplyr function to select the two columns of interest: seed count and location and omitted direction, mound and species. With the intention of answering the question “How does total seed number differ between kangaroo rat mound locations?”, we are only interested in seed count and location. To prepare to run statistical analysis on the data frame, we then summarized the data by creating a new object called “krat_subset_summary” and grouping the following values by location: mean, median, standard deviation, variance, count, standard error, and margin of error. A data summary is used to help organize and visually understand the data for the frame in question. After summarizing the data, we created a plot of the krat_subset data to check for the normality of the data, and whether it had a normal distribution. As seen in the figure, data is not normally distributed which can make statistical analysis difficult. In order to properly test the data, we chose to run a Kruskal-Wallis test to compare the seed count data for the four different locations of interest (B, D, E, I). This test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
+The null hypothesis, in biological terms, is that there is not relationship in seed count and mound location, with seed count being random whereas the alternative hypothesis predicts that mound location is a significant predictor of seed count, with seed count increasing or decreasing according to mound location. After reading in the data and determining our hypothesis, we made a missing data visualization of the krat data set so we could view the missing data from the frame. As seen in the visualization, there are no missing observations for the Kangaroo Rat data set. After determining this, we then created a data visualization using a bar graph with location of the kangaroo rat mound on the x axis and seed count on the y axis. The Kangaroo Rat data set is a chart of the observations made for the study with the columns being; mound (mnd), direction (dir), location (loc), species (species), and seed number (seeds). There are a total of 1560 observations, spanning different mounds and on a different location for each mound. The mound locations used for the study are as follows; around the base of the mound (B), surrounding area of the mount (D), edge of Bouteloua eriopoda grass (E) and the inter space between the Bouteloua eriopoda grass (I). In order to wrangle and clean the data set to show only the observations needed for the purpose of our analysis, we created a krat_subset object and used the dplyr function to select the two columns of interest: seed count and location and omitted direction, mound and species. With the intention of answering the question "How does total seed number differ between kangaroo rat mound locations?", we are only interested in seed count and location. To prepare to run statistical analysis on the data frame, we then summarized the data by creating a new object called "krat_subset_summary" and grouping the following values by location: mean, median, standard deviation, variance, count, standard error, and margin of error. A data summary is used to help organize and visually understand the data for the frame in question. After summarizing the data, we created a plot of the krat_subset data to check for the normality of the data, and whether it had a normal distribution. As seen in the figure, data is not normally distributed which can make statistical analysis difficult. In order to properly test the data, we chose to run a Kruskal-Wallis test to compare the seed count data for the four different locations of interest (B, D, E, I). This test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
 
-1) Independent observations: Observations within each group (B, D, E, and I) are completely independent of each other. Observations in one group are not influenced by observations in any of the other groups.
+1)  Independent observations: Observations within each group (B, D, E, and I) are completely independent of each other. Observations in one group are not influenced by observations in any of the other groups.
 
-2) Similar shape of distributions: Distribution shape was checked using a QQ-plot for each of the mound locations and all distributions were visually similar. All distributions look relatively flat without a strong linear relationship. However, after 2 standard deviations away from the mean, the data points rapidly increase.
+2)  Similar shape of distributions: Distribution shape was checked using a QQ-plot for each of the mound locations and all distributions were visually similar. All distributions look relatively flat without a strong linear relationship. However, after 2 standard deviations away from the mean, the data points rapidly increase.
 
-3) Homogeneity of variances: If there is homogeneity of variances, the dependent variable across the groups being compared should be similar. 
+3)  Homogeneity of variances: If there is homogeneity of variances, the dependent variable across the groups being compared should be similar.
 
-4) Random Sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
+4)  Random Sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound.
 
-To test for homogeneity of variances, we ran a levene test using seeds as the dependent variable and mound location as the grouping variable. The significant p-value of 2.66e-09 indicates that there is no homogeneity of variances, but, since the Kruskal-Wallis test is non-parametric, it is less sensitive to violations of this assumption and can still be used. After running these two tests, we then measured the effect size of the data set which informs us the significance of the relationship between our variables on a numerical scale, and therefore how important and applicable it is to the “real world”. 
-
+To test for homogeneity of variances, we ran a levene test using seeds as the dependent variable and mound location as the grouping variable. The significant p-value of 2.66e-09 indicates that there is no homogeneity of variances, but, since the Kruskal-Wallis test is non-parametric, it is less sensitive to violations of this assumption and can still be used. After running these two tests, we then measured the effect size of the data set which informs us the significance of the relationship between our variables on a numerical scale, and therefore how important and applicable it is to the "real world".
 
 ```{r loading-in-packages1}
 library(tidyverse)
@@ -80,8 +77,8 @@ ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
+The only thing we did to wrangle the data was to select only the mound location and seed count fields that we needed for our analysis.
 
-The only thing we did to wrangle the data was to select only the mound location and seed count fields that we needed for our analysis. 
 ```{r model-object}
 # create a new object called krat subset 
 krat_subset <- krat %>% 
@@ -105,7 +102,6 @@ krat_subset_summary <- krat_subset %>%
 krat_subset_summary
 ```
 
-
 ```{r check-normality}
 #check the distribution of the data grouped by mound location
 ggplot(data = krat_subset) +
@@ -113,7 +109,8 @@ ggplot(data = krat_subset) +
   stat_qq_line(aes(sample = seeds), color = "red") +
   facet_wrap(~ loc)
 ```
-Distributions are not normal, all distributions look mostly like a flat line that increase exponentially/rapidly as you get more positive standard deviations away. Distributions are all similar. 
+
+Distributions are not normal, all distributions look mostly like a flat line that increase exponentially/rapidly as you get more positive standard deviations away. Distributions are all similar.
 
 ```{r}
 # Using krat_subset as dataframe and dependent variable 'seeds' and a grouping variable 'loc'
@@ -123,42 +120,38 @@ library(car)
 leveneTest(seeds ~ loc, data = krat_subset)
 ```
 
-* Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
+-   Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound.
 
+Categorical predictor variables: The predictor variables are the mound location, which are categorical data because the mound locations are identified based on four different labels.
 
-Categorical predictor variables: The predictor variables are the mound location, which are categorical data because the mound locations are identified based on four different labels. 
-
-Each group should have at least 5 observations: Yes. 
+Each group should have at least 5 observations: Yes.
 
 Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
 
 ```{r kruskal-test}
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
-very low p-value indicating seed count does differ between mound locations. 
+
+very low p-value indicating seed count does differ between mound locations.
 
 ```{r eta-squared}
 # Comparison of ranks for Kruskal Wallis based on H statistic
 rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
+
 small effect size (0.0128)
 
 ## Results
 
-After wrangling, cleaning and organizing the data for problem 1, we used different tests and created model objects in order to analyze the data. In checking the normality of the Kangaroo rat subset, we found that the distributions are not normal, with the distribution on the graph looking relatively flat. However, as the data points get progressively more standard deviations away from the mean, the plot increases exponentially and rapidly, creating a sharp uptick in trend at the end of each plot. For each location, the distributions all follow this same trend. The levene test shows ________________. This is significant because__________ (need to ask Benise <3 ) Next, we ran the Kruskal Wallis test which resulted in a very low p value (6.74 * 10^ (-5)), indicating that mound location has a significant effect on seed count. The effect size test resulted in a very low value (0.0128) which discerns the applicability of these results of other kangaroo rat mounds and seed count, with a low effect size signifying a limited practical application. Although the p-value indicates that mound location influences seed count, the effect size tells us that these results cannot be considered the rule when considering applications. 
+After wrangling, cleaning and organizing the data for problem 1, we used different tests and created model objects in order to analyze the data. In checking the normality of the Kangaroo rat subset, we found that the distributions are not normal, with the distribution on the graph looking relatively flat. However, as the data points get progressively more standard deviations away from the mean, the plot increases exponentially and rapidly, creating a sharp uptick in trend at the end of each plot. For each location, the distributions all follow this same trend. The levene test shows \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_. This is significant because\_\_\_\_\_\_\_\_\_\_ (need to ask Benise \<3 ) Next, we ran the Kruskal Wallis test which resulted in a very low p value (6.74 \* 10\^ (-5)), indicating that mound location has a significant effect on seed count. The effect size test resulted in a very low value (0.0128) which discerns the applicability of these results of other kangaroo rat mounds and seed count, with a low effect size signifying a limited practical application. Although the p-value indicates that mound location influences seed count, the effect size tells us that these results cannot be considered the rule when considering applications.
 
 ## Citations:
 
 Beck, J Maurice. 30 August 2010. Seed Dispersal by Scatter-hoarding Rodents in Arid Environments (2010). British Ecological Society. https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2745.2010.01716.x
 
-Johnson JS, Cantrell RS, Cosner C, Hartig F, Hastings A, Rogers HS, Schupp EW, Shea K, Teller BJ, Yu X, Zurell D, Pufal G. Rapid changes in seed dispersal traits may modify plant responses to global change. AoB Plants. 2019 Mar 28;11(3):plz020. doi: 10.1093/aobpla/plz020. PMID: 31198528; PMCID: PMC6548345. 
+Johnson JS, Cantrell RS, Cosner C, Hartig F, Hastings A, Rogers HS, Schupp EW, Shea K, Teller BJ, Yu X, Zurell D, Pufal G. Rapid changes in seed dispersal traits may modify plant responses to global change. AoB Plants. 2019 Mar 28;11(3):plz020. doi: 10.1093/aobpla/plz020. PMID: 31198528; PMCID: PMC6548345.
 
 Koontz, T. and H. Simpson. 2013. Effects of Kangaroo Rat Mounds on Seed Banks of Grass and Shrublands at the Sevilleta National Wildlife Refuge, New Mexico (2001) ver 102459. Environmental Data Initiative. https://doi.org/10.6073/pasta/115b8095a5e82028869a8c56eff14597 (Accessed 2023-06-10).
-
-○ Interpretation of main results in the context of the system\
-○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.\
-○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption\
-○ A table (if appropriate) with a caption
 
 # Problem 2
 
@@ -168,14 +161,15 @@ visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1.
 
 ## Introduction
 
-  For the second data set, which is the study of individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge (the arctic tundra) we analyzed the data in order to answer the questions, "How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?". Studies show that increased shrub abundance can lead to increased levels of snow which can allow for "higher winter soil temperatures, greater microbial activity, and more plant-available nitrogen. High levels of soil nitrogen favor shrub growth the following summer" (Sturm et al). Each of these characteristics can lead to increased growth in spring and summer, altering species richness and plant community composition. According to Seaver's study from the Environmental Data Initiative, this can therefore effect the reproductive success of plants, which is studied through phenology- the timing of flowering in plants (Seaver). Flowering times are affected by surrounding plant and insect species, and studies show that the most common flowering time of plants is during seasons with higher biodiversity. Increased shrubs would indicate higher rates of flowering. 
+For the second data set, which is the study of individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge (the arctic tundra) we analyzed the data in order to answer the questions, "How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?". Studies show that increased shrub abundance can lead to increased levels of snow which can allow for "higher winter soil temperatures, greater microbial activity, and more plant-available nitrogen. High levels of soil nitrogen favor shrub growth the following summer" (Sturm et al). Each of these characteristics can lead to increased growth in spring and summer, altering species richness and plant community composition. According to Seaver's study from the Environmental Data Initiative, this can therefore effect the reproductive success of plants, which is studied through phenology- the timing of flowering in plants (Seaver). Flowering times are affected by surrounding plant and insect species, and studies show that the most common flowering time of plants is during seasons with higher biodiversity. Increased shrubs would indicate higher rates of flowering.
 
 ## Methods
 
-  	To begin statistical analysis of the second problem and dataset, we began as we did with problem 1: by reading in the data using the csv function and storing it under an object named seed_1. Next, we made a missing data visualization, and captioned the plot accordingly, in order to view any missing data points from the frame. We found that there was missing data in the number of seeds, the number of inflorescences collected, the weight of seeds, and observational distance from the shrub. However, for the purpose of answering the questions “How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?”, we are only concerned with the missing values in the first two mentioned. We then created a ggpairs plot in order to graph the relationship between each variable using the seed data set which helps with data visualization and understanding. In order to properly analyze the data, we created multiple objects and used the pipe operator to narrow down the data table to the following variables of interest: species, treatment, number of seeds, number of inflorescences, and number of inflorescences collected. We then used the drop_na function to remove the missing values, leaving us with a cleaned data subset called “seed_col3”. Then, we made a secondary data visualization with the new subsetted data in the form of a histogram. We can see that the frequency distribution is right skewed, with the majority of plots having 0 seeds (almost 150 plots) and very few having more than 50 seeds (only ~12 plots). To determine which variable had the largest effect on seed count, we made multiple linear and generalized linear models with the seed column dataset. Seed model 2 and 2a are both generalized linear models with a poisson distribution, containing the variables species, total number of inflorescences, and plot type (treatment). The second set of models are generalized linear models 3 and 3a with a negative binomial distribution. We then made models 4-4a and 5-5a with first a poisson distribution and the random effect and the second with a negative binomial distribution and the random effect. The random effect variable we chose to use was the number of inflorescences collected from each plant. We then checked the residuals and ran diagnostics on each of the models (2, 3, 4, 5, and a) using the simulated residuals function and plotting it using the plot function. These show the QQ plot of the residuals and compare them against the predictor variables included in the models. After running diagnostics, we used the MuMin model select function to test the distributions of each model for validity and select the best suited model for the dataset. The best suited model is the model that influences and best predicts the dependent variable in question, in this case the model we chose was model 3, and we viewed and summarized the model object before defining the confidence interval using the confint function in R 
+```         
+To begin statistical analysis of the second problem and dataset, we began as we did with problem 1: by reading in the data using the csv function and storing it under an object named seed_1. Next, we made a missing data visualization, and captioned the plot accordingly, in order to view any missing data points from the frame. We found that there was missing data in the number of seeds, the number of inflorescences collected, the weight of seeds, and observational distance from the shrub. However, for the purpose of answering the questions “How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?”, we are only concerned with the missing values in the first two mentioned. We then created a ggpairs plot in order to graph the relationship between each variable using the seed data set which helps with data visualization and understanding. In order to properly analyze the data, we created multiple objects and used the pipe operator to narrow down the data table to the following variables of interest: species, treatment, number of seeds, number of inflorescences, and number of inflorescences collected. We then used the drop_na function to remove the missing values, leaving us with a cleaned data subset called “seed_col3”. Then, we made a secondary data visualization with the new subsetted data in the form of a histogram. We can see that the frequency distribution is right skewed, with the majority of plots having 0 seeds (almost 150 plots) and very few having more than 50 seeds (only ~12 plots). To determine which variable had the largest effect on seed count, we made multiple linear and generalized linear models with the seed column dataset. Seed model 2 and 2a are both generalized linear models with a poisson distribution, containing the variables species, total number of inflorescences, and plot type (treatment). The second set of models are generalized linear models 3 and 3a with a negative binomial distribution. We then made models 4-4a and 5-5a with first a poisson distribution and the random effect and the second with a negative binomial distribution and the random effect. The random effect variable we chose to use was the number of inflorescences collected from each plant. We then checked the residuals and ran diagnostics on each of the models (2, 3, 4, 5, and a) using the simulated residuals function and plotting it using the plot function. These show the QQ plot of the residuals and compare them against the predictor variables included in the models. After running diagnostics, we used the MuMin model select function to test the distributions of each model for validity and select the best suited model for the dataset. The best suited model is the model that influences and best predicts the dependent variable in question, in this case the model we chose was model 3, and we viewed and summarized the model object before defining the confidence interval using the confint function in R 
+```
 
-*Adjusted R2 value???          Lastly, we created a gg plot of each species….. NEED TO FINISH & TALK TO KIYA!! <3 ....*
-
+*Adjusted R2 value??? Lastly, we created a gg plot of each species..... NEED TO FINISH & TALK TO KIYA!! \<3 ....*
 
 ○ Any cleaning and wrangling steps\
 ○ Assumption checks\
@@ -203,6 +197,7 @@ library(flextable)
 ```
 
 Redoing problem 2 based on workshop 10
+
 ```{r knitr-example, eval = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 # suppress any messages from R using the code chunk above, setting messages and warnings to false}
@@ -227,7 +222,6 @@ seed_1 %>%
   ggpairs()
 # make a ggpairs plot to show the relationship between variables using the seed data set
 ```
-
 
 ```{r cleaning-up-the-data}
 #cleaning and sub-setting data
@@ -286,6 +280,7 @@ seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_inf
 ```
 
 Look at Residuals
+
 ```{r diagnostics-model-2}
 plot(simulateResiduals(seed_mod2))
 ```
@@ -359,19 +354,12 @@ seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treat
 
 ## Results
 
-In each of the diagnostic tests for the linear and generalized linear models, we can see that the QQ plot of model two (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables) tells us that there is significant deviation from expected values. This indicates that the data is not normally distributed, as it strays off the 45 degree angle line on the first plot. According tot he distribution of the data in the residual plot, we can understand that the data, therefore, is too "peaked" in the middle, squeezing the traditional bell curve of a normally distributed data set into a tall mound. This shows that most of the data falls within 1 standard deviation away from the mean. When looking at model 3 (the negative binomial distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables), we can see that the data is very much so normally distributed, with the data point falling onto the red line in the QQ plot. This is the sign of a traditional and symmetrical bell curve, with most of the data falling within 2 standard deviations from the mean. Furthermore, model 4 (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), it is clear that this data frame has a non normal distribution. Model 5, (the generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), also has a non normal distribution and contains significant deviation. Model object a, the generalized linear model with negative binomial distribution ad the same variables as model 5, also does not have a normal distribution and falls short of the expectation. After creating and checking the diagnostics for each model, it is important to then compare the models and choose the best suited object for the analysis at hand.... 
-*Need help here:*
-The models were compared with the MuMIN::model.selection function and we can see that because of the *___________* values, model 3 is the best choice for this data frame. AFter selecting model 3, we found that the confidence interval was 97.5% and the significance level is therefore 2.5%. These values gave us the intercepts needed to graph the model object for our final data visualization, ??????? confused here!! Finally, we can see that..... *I honeslty dont know what the hypoetheses are and therfore idk what was proven here! help!* 
-
-○ Interpretation of main results in the context of the system
-○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
-○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption
-○ A table (if appropriate) with a caption
+In each of the diagnostic tests for the linear and generalized linear models, we can see that the QQ plot of model two (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables) tells us that there is significant deviation from expected values. This indicates that the data is not normally distributed, as it strays off the 45 degree angle line on the first plot. According tot he distribution of the data in the residual plot, we can understand that the data, therefore, is too "peaked" in the middle, squeezing the traditional bell curve of a normally distributed data set into a tall mound. This shows that most of the data falls within 1 standard deviation away from the mean. When looking at model 3 (the negative binomial distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables), we can see that the data is very much so normally distributed, with the data point falling onto the red line in the QQ plot. This is the sign of a traditional and symmetrical bell curve, with most of the data falling within 2 standard deviations from the mean. Furthermore, model 4 (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), it is clear that this data frame has a non normal distribution. Model 5, (the generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), also has a non normal distribution and contains significant deviation. Model object a, the generalized linear model with negative binomial distribution ad the same variables as model 5, also does not have a normal distribution and falls short of the expectation. After creating and checking the diagnostics for each model, it is important to then compare the models and choose the best suited object for the analysis at hand.... *Need help here:* The models were compared with the MuMIN::model.selection function and we can see that because of the *\_\_\_\_\_\_\_\_\_\_\_* values, model 3 is the best choice for this data frame. AFter selecting model 3, we found that the confidence interval was 97.5% and the significance level is therefore 2.5%. These values gave us the intercepts needed to graph the model object for our final data visualization, ??????? confused here!! Finally, we can see that..... *I honeslty dont know what the hypoetheses are and therfore idk what was proven here! help!*
 
 ## Citations:
 
-Matthew Sturm and others, Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland, BioScience, Volume 55, Issue 1, January 2005, Pages 17–26, https://doi.org/10.1641/0006-3568(2005)055[0017:WBPCHC]2.0.CO;2
+Matthew Sturm and others, Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland, BioScience, Volume 55, Issue 1, January 2005, Pages 17--26, https://doi.org/10.1641/0006-3568(2005)055\[0017:WBPCHC\]2.0.CO;2
 
 Seaver, M. 2022. Individual and community flowering phenology, seed counts and pollinator visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/edc4ab2faf7dd96cd1deac1544d5f2b9 (Accessed 2023-06-10).
 
-Wolf, A Amelia and others. Flowering Phenology shifts in Response to Biodiversity Loss (13 March 2017). National Academy of Science. Carnegie Institution of Washington, Stanford, CA. https://www.pnas.org/doi/10.1073/pnas.1608357114 
+Wolf, A Amelia and others. Flowering Phenology shifts in Response to Biodiversity Loss (13 March 2017). National Academy of Science. Carnegie Institution of Washington, Stanford, CA. https://www.pnas.org/doi/10.1073/pnas.1608357114
