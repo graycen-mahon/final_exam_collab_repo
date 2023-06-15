@@ -24,7 +24,8 @@ Methods (code): ○ Citations for packages, software, data, or other steps
 
 In order to properly analyze and organize the data set, we first began by reading in the data file using the csv function and saving data within an object named "krat"- as in Kangaroo Rat. The hypotheses we are testing are as follows:
 
-H0: All ranks are equal (no difference in medians) HA: At least two ranks differ (at least one difference in group medians)
+H0: All ranks are equal (no difference in medians) 
+HA: At least two ranks differ (at least one difference in group medians)
 
 The null hypothesis, in biological terms, is that there is not relationship in seed count and mound location, with seed count being random whereas the alternative hypothesis predicts that mound location is a significant predictor of seed count, with seed count increasing or decreasing according to mound location. After reading in the data and determining our hypothesis, we made a missing data visualization of the krat data set so we could view the missing data from the frame. As seen in the visualization, there are no missing observations for the Kangaroo Rat data set. After determining this, we then created a data visualization using a bar graph with location of the kangaroo rat mound on the x axis and seed count on the y axis. The Kangaroo Rat data set is a chart of the observations made for the study with the columns being; mound (mnd), direction (dir), location (loc), species (species), and seed number (seeds). There are a total of 1560 observations, spanning different mounds and on a different location for each mound. The mound locations used for the study are as follows; around the base of the mound (B), surrounding area of the mount (D), edge of Bouteloua eriopoda grass (E) and the inter space between the Bouteloua eriopoda grass (I). In order to wrangle and clean the data set to show only the observations needed for the purpose of our analysis, we created a krat_subset object and used the dplyr function to select the two columns of interest: seed count and location and omitted direction, mound and species. With the intention of answering the question "How does total seed number differ between kangaroo rat mound locations?", we are only interested in seed count and location. To prepare to run statistical analysis on the data frame, we then summarized the data by creating a new object called "krat_subset_summary" and grouping the following values by location: mean, median, standard deviation, variance, count, standard error, and margin of error. A data summary is used to help organize and visually understand the data for the frame in question. After summarizing the data, we created a plot of the krat_subset data to check for the normality of the data, and whether it had a normal distribution. As seen in the figure, data is not normally distributed which can make statistical analysis difficult. In order to properly test the data, we chose to run a Kruskal-Wallis test to compare the seed count data for the four different locations of interest (B, D, E, I). This test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
 
@@ -35,6 +36,10 @@ The null hypothesis, in biological terms, is that there is not relationship in s
 3)  Homogeneity of variances: If there is homogeneity of variances, the dependent variable across the groups being compared should be similar.
 
 4)  Random Sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound.
+
+5) Categorical predictor variables: The predictor variables are the mound location, which are categorical data because the they are identified based on four different labels.
+
+6) Each group should have at least 5 observations.
 
 To test for homogeneity of variances, we ran a levene test using seeds as the dependent variable and mound location as the grouping variable. The significant p-value of 2.66e-09 indicates that there is no homogeneity of variances, but, since the Kruskal-Wallis test is non-parametric, it is less sensitive to violations of this assumption and can still be used. After running these two tests, we then measured the effect size of the data set which informs us the significance of the relationship between our variables on a numerical scale, and therefore how important and applicable it is to the "real world".
 
@@ -77,8 +82,6 @@ ggplot(data = krat, aes(x = loc, y = seeds)) +
   geom_col()
 ```
 
-The only thing we did to wrangle the data was to select only the mound location and seed count fields that we needed for our analysis.
-
 ```{r model-object}
 # create a new object called krat subset 
 krat_subset <- krat %>% 
@@ -110,8 +113,6 @@ ggplot(data = krat_subset) +
   facet_wrap(~ loc)
 ```
 
-Distributions are not normal, all distributions look mostly like a flat line that increase exponentially/rapidly as you get more positive standard deviations away. Distributions are all similar.
-
 ```{r}
 # Using krat_subset as dataframe and dependent variable 'seeds' and a grouping variable 'loc'
 library(car)
@@ -120,30 +121,18 @@ library(car)
 leveneTest(seeds ~ loc, data = krat_subset)
 ```
 
--   Random sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound.
-
-Categorical predictor variables: The predictor variables are the mound location, which are categorical data because the mound locations are identified based on four different labels.
-
-Each group should have at least 5 observations: Yes.
-
-Running a Kruskal-Wallis test to compare the seed count data for four different locations around the mounds. The Kruskal-Wallis test is a non-parametric test used to compare the distributions of a continuous or discrete dependent variable across multiple independent groups. As a non-parametric test, it does not make strong assumptions about the shape or distribution of the data. However, there are some assumptions and considerations to keep in mind when conducting a Kruskal-Wallis test:
-
 ```{r kruskal-test}
 kruskal.test(seeds ~ loc, data = krat_subset)
 ```
-
-very low p-value indicating seed count does differ between mound locations.
 
 ```{r eta-squared}
 # Comparison of ranks for Kruskal Wallis based on H statistic
 rstatix::kruskal_effsize(seeds ~ loc, data = krat_subset)
 ```
 
-small effect size (0.0128)
-
 ## Results
 
-After wrangling, cleaning and organizing the data for problem 1, we used different tests and created model objects in order to analyze the data. In checking the normality of the Kangaroo rat subset, we found that the distributions are not normal, with the distribution on the graph looking relatively flat. However, as the data points get progressively more standard deviations away from the mean, the plot increases exponentially and rapidly, creating a sharp uptick in trend at the end of each plot. For each location, the distributions all follow this same trend. The levene test shows \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_. This is significant because\_\_\_\_\_\_\_\_\_\_ (need to ask Benise \<3 ) Next, we ran the Kruskal Wallis test which resulted in a very low p value (6.74 \* 10\^ (-5)), indicating that mound location has a significant effect on seed count. The effect size test resulted in a very low value (0.0128) which discerns the applicability of these results of other kangaroo rat mounds and seed count, with a low effect size signifying a limited practical application. Although the p-value indicates that mound location influences seed count, the effect size tells us that these results cannot be considered the rule when considering applications.
+After wrangling, cleaning and organizing the data for problem 1, we used different tests and created model objects in order to analyze the data. In checking the normality of the Kangaroo rat subset, we found that the distributions are not normal, with the distribution on the graph looking relatively flat. However, as the data points get progressively more standard deviations away from the mean, the plot increases exponentially and rapidly, creating a sharp uptick in trend at the end of each plot. For each location, the distributions all follow this same trend. Next, we ran the Kruskal Wallis test which resulted in a very low p value (6.74 \* 10\^ (-5)), indicating that mound location has a significant effect on seed count. The effect size test resulted in a very low value of 0.0128, which discerns the applicability of these results of other kangaroo rat mounds and seed count, with a low effect size signifying a limited practical application. Although the p-value indicates that mound location influences seed count, the effect size tells us that these results cannot be considered the rule when considering applications.
 
 ## Citations:
 
