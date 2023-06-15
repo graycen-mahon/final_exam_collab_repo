@@ -1,7 +1,7 @@
 ---
 title: "193DS_Final_Code"
 authors: Graycen Mahon, Benise Limon, Kiya Pupa
-data: "2023-06-12"
+date: "2023-06-12"
 output:
   html_document:
     code_folding: hide
