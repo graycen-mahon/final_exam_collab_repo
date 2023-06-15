@@ -162,6 +162,27 @@ To begin statistical analysis of the second problem and dataset, we began as we 
 
 *Adjusted R2 value??? Lastly, we created a gg plot of each species..... NEED TO FINISH & TALK TO KIYA!! \<3 ....*
 
+Graph uses ggpredict to show predictions for linear model. Total_nr_infl is on the x axis against the count of nr_seeds on the y-axis. Treatments are seperated by color into control and shrub (orange and blue, respectively). Graphs are facet wrapped by species meaning they are split up by species type. Allows us to see how seed count varies with the multiple different variables. 
+
+**generalized linear models allow you to predict non continuous values
+**adjusted R2 values adjusts a linear model that has multiple independent variables.
+ r2M and R2c are equivalent
+ ***R2m (Marginal R-squared) shows the proportion of variance explained by the independent variables in the model ignore the RMc that is only for random effects
+ **log normal, tridelta, and gamma are different ways of calculating the R2. the values for each suggest that lognormal explains a higher proportion of the variance in the response when compared to delta and trigamma (partially explained by GPT)
+
+linear regression: at each value of x (predictor), y (response)
+is normally distributed
+
+
+Null: Seed count is not predicted by plot type(shrub or open), plant species, and total
+number of inflorescence
+Alternative Hypothesis: Seed count may be predicted by plot type (shrub or open), plant species, and total
+number of inflorescence
+
+Adjusted R2 value
+
+
+null and hypothesis 
 ○ Any cleaning and wrangling steps\
 ○ Assumption checks\
 ○ Statistical tests and null hypotheses\
@@ -190,8 +211,9 @@ library(flextable)
 Redoing problem 2 based on workshop 10
 
 ```{r knitr-example, eval = FALSE}
+#suppresses messages from R, set messages and warning to false
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-# suppress any messages from R using the code chunk above, setting messages and warnings to false}
+#suppress any messages from R using the code chunk above, setting messages and warnings to false}
 ```
 
 ```{r reading-in-the-dataset}
@@ -200,18 +222,20 @@ seed_1 <- read_csv(here("data/shrubstudy_seed_ctwt.ms.data.csv"))
 ```
 
 ```{r missing-data-visualization}
+#create missing data visualization for seed 1 dataset. add in caption and adjust spacing
 gg_miss_var(seed_1) +
   labs(caption = "Missing Data in the Seed Dataset") +
   theme(plot.caption = element_text(hjust = 0.6))
 
+#skim the data set to get an idea of what it contains
 skim(seed_1)
 ```
 
 ```{r making-a-ggpairs-plot}
+#make a ggpairs plot and show variables between species using data set. must specify dplyr packages due to multiple variables in the dataset
 seed_1 %>% 
   dplyr::select(!species) %>% 
   ggpairs()
-# make a ggpairs plot to show the relationship between variables using the seed data set
 ```
 
 ```{r cleaning-up-the-data}
@@ -220,81 +244,73 @@ seed_1 %>%
 seed_subset1 <- seed_1 %>%
   dplyr::select(species, treatment, nr_seeds, total_nr_infl, nr_infl_coll)
 
+#changing Inf and NaN values to NA and creating new object that does so
 seed_col0 <- seed_subset1
 seed_1[is.na(seed_1) | seed_1 == "Inf"] <- NA 
 
+#dropping NA values from subsetted dataset. 
 seed_col1 <- seed_col0 %>% 
   drop_na(nr_seeds)
-
-
-#seed_col <- seed_subset1
-#seed_subset1[is.na(seed_subset1) | seed_subset1 == "Inf"] <- NA 
-
-seed_col2 <- seed_1
-seed_1[is.na(seed_1) | seed_1 == "Inf"] <- NA 
-
-seed_col3 <- seed_col2 %>% 
-  drop_na(nr_seeds)
-
-#seed_col1
-seed_col3
 ```
 
 ```{r data-visualization}
+#creating histogram visualization of nr_seeds, calculated bins from observations
 ggplot(seed_col1, aes(x = nr_seeds)) +
   geom_histogram(bins = 7)
 ```
 
 ```{r}
-#this is a linear model that we know is wrong
+#this is a linear model that we know is wrong because it isnt't generalized
 seed_mod1 <- lm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1)
 
-#generalized linear model with Poisson distribution
+#oisson distribution generalized linear model 
 seed_mod2 <- glm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "poisson")
 seed_mod2.a <- glm(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "poisson")
                                 
-#generalized linear model with negative binomial distribution
+#negative binomial distribution with generalized linear model (we will find out later that this is the best)
 seed_mod3 <- glm.nb(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1)
 seed_mod3.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment, data = seed_col1, family = "nbinom2")
-#best
 
-#generalized linear model with Poisson distribution and random effect of site
+#generalized linear model with Poisson distribution and random effect of site, nr_infl_coll used for random effect of site
 seed_mod4 <- glmer(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "poisson")
 seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "poisson")
-#use species or treatment for random effect???
 
-#generalized linear model with negative binomial distribution and random effect of site
+#generalized linear model with negative binomial distribution and random effect of site, nr_infl_coll used for random effect of site
 seed_mod5 <- glmer.nb(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1)
 seed_mod.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|nr_infl_coll), data = seed_col1, family = "nbinom2") 
-
-#error for last few models, need numeric data?
 ```
 
 Look at Residuals
 
 ```{r diagnostics-model-2}
+#plot residuals for each of the linear models to find if there is a normal distribution and to see if quantile deviations are detected. 
 plot(simulateResiduals(seed_mod2))
 ```
 
 ```{r diagnostics-model-3}
+#plot residuals for each of the linear models to find if there is a normal distribution and to see if quantile deviations are detected
+#log model to try to make it more normal
 plot(simulateResiduals(seed_mod3))
 log(seed_mod3)
 ```
 
 ```{r diagnostics-model-4}
+#plot residuals for each of the linear models to find if there is a normal distribution and to see if quantile deviations are detected
 plot(simulateResiduals(seed_mod4))
 ```
 
 ```{r diagnostics-model-5}
+#plot residuals for each of the linear models to find if there is a normal distribution and to see if quantile deviations are detected
 plot(simulateResiduals(seed_mod5))
 ```
 
 ```{r diagnostics-model-a}
+#plot residuals for each of the linear models to find if there is a normal distribution and to see if quantile deviations are detected. 
 plot(simulateResiduals(seed_mod.a))
 ```
 
 ```{r testing-distributions-for-validity}
-#Which distribution to use?
+#MuMIn model tells us which distribution to use
 MuMIn::model.sel(seed_mod1, seed_mod2, seed_mod3, seed_mod4, seed_mod5, seed_mod.a)
 ```
 
@@ -304,48 +320,72 @@ seed_mod3
 ```
 
 ```{r summarizing-the-model-object}
+#summarize the best model
 summary(seed_mod3)
 ```
 
 ```{r defining-confidence-intervals}
-#confidence intervals
+#define confidence intervals for the best model
 confint(seed_mod3)
 ```
 
 ```{r}
-#adjusted R2
+#calculates adjusted r2??? r2M and R2c are equivalent 
 r.squaredGLMM(seed_mod3)
-# error message: the null model is correct only if all variables used by the original model remain unchanged. 
+#error message: the null model is correct only if all variables used by the original model remain unchanged. 
 ```
 
 ```{r}
-#model object in table 
+#model object in flex table 
 seed_mod3 %>% 
   as_flextable()
 ```
 
 ```{r}
+#create prediction from ggpredict using total_nf_infl, treatment, and species. rename treatment and species so you can group by color for treatment and facet wrap by species
 seed_predictions <- ggpredict(seed_mod3, terms = c("total_nr_infl", "treatment",  "species")) %>% 
   rename(treatment = group,
          species = facet)
+#show seed predictions
 seed_predictions
 
+#plot the linear model with the total_nr_infl on x axis and nr_seeds on y axis. Make the fill color for the plots equivalent to the treatment
 ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
+#create geom point and adjust size, color by treatment type 
   geom_point(aes(color = treatment), alpha = 0.5) +
+#facet wrap by species 
   facet_wrap(~species, scales = "free_y") +
+#create line graph from seed predictions where the y value is equal to the predicted value, color by treatment. Use geom ribbon on graph with seed predictions to show confidence levels. Fill geom ribbon by treatment. Make intensity 0.2
   geom_line(data = seed_predictions, aes(x = x, y = predicted, color = treatment)) + geom_ribbon(data = seed_predictions, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high, fill = treatment), alpha = 0.2) +
+#assign colors for treatment values
   scale_fill_manual(values = c("shrub" = "blue", "control" = "orange")) +
+#assign colors for treatment values
   scale_color_manual(values = c("shrub" = "blue", "control" = "orange")) +
+#assign theme bw
   theme_bw() +
+#facet wrap be species and scales
   facet_wrap(~species, scales = "free_y") +
-  labs(fill = "Mined", color = "Mined")
-
-seed_mod4.a <- glmmTMB(nr_seeds ~ species + total_nr_infl + treatment + (1|treatment), data = seed_col1, family = "poisson")
+#fill by treatment by type
+  labs(fill = "treatment", color = "treatment")
 ```
+
+Graph uses ggpredict to show predictions for linear model. Total_nr_infl is on the x axis against the count of nr_seeds on the y-axis. Treatments are seperated by color into control and shrub (orange and blue, respectively). Graphs are facet wrapped by species meaning they are split up by species type. Allows us to see how seed count varies with the multiple different variables. 
 
 ## Results
 
+<<<<<<< HEAD
+In each of the diagnostic tests for the linear and generalized linear models, we can see that the QQ plot of model two (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables) tells us that there is significant deviation from expected values. This indicates that the data is not normally distributed, as it strays off the 45 degree angle line on the first plot. According tot he distribution of the data in the residual plot, we can understand that the data, therefore, is too "peaked" in the middle, squeezing the traditional bell curve of a normally distributed data set into a tall mound. This shows that most of the data falls within 1 standard deviation away from the mean. When looking at model 3 (the negative binomial distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables), we can see that the data is very much so normally distributed, with the data point falling onto the red line in the QQ plot. This is the sign of a traditional and symmetrical bell curve, with most of the data falling within 2 standard deviations from the mean. Furthermore, model 4 (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), it is clear that this data frame has a non normal distribution. Model 5, (the generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), also has a non normal distribution and contains significant deviation. Model object a, the generalized linear model with negative binomial distribution ad the same variables as model 5, also does not have a normal distribution and falls short of the expectation. After creating and checking the diagnostics for each model, it is important to then compare the models and choose the best suited object for the analysis at hand.... 
+*Need help here:*
+
+The models were compared with the MuMIN::model.selection function and we can see that because of the ___________ values, model 3 is the best choice for this data frame. AFter selecting model 3, we found that the confidence interval was 97.5% and the significance level is therefore 2.5%. These values gave us the intercepts needed to graph the model object for our final data visualization, ??????? confused here!! Finally, we can see that..... I honeslty dont know what the hypoetheses are and therfore idk what was proven here! help!
+
+○ Interpretation of main results in the context of the system
+○ Relevant test statistics, degrees of freedom, p-values, significance levels, etc.
+○ A visualization of some kind reflecting the analysis you did (comparison of groups and/or relationships between variables) with a caption
+○ A table (if appropriate) with a caption
+=======
 In each of the diagnostic tests for the linear and generalized linear models, we can see that the QQ plot of model two (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables) tells us that there is significant deviation from expected values. This indicates that the data is not normally distributed, as it strays off the 45 degree angle line on the first plot. According tot he distribution of the data in the residual plot, we can understand that the data, therefore, is too "peaked" in the middle, squeezing the traditional bell curve of a normally distributed data set into a tall mound. This shows that most of the data falls within 1 standard deviation away from the mean. When looking at model 3 (the negative binomial distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables), we can see that the data is very much so normally distributed, with the data point falling onto the red line in the QQ plot. This is the sign of a traditional and symmetrical bell curve, with most of the data falling within 2 standard deviations from the mean. Furthermore, model 4 (the poisson distributed generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), it is clear that this data frame has a non normal distribution. Model 5, (the generalized linear model containing the species, total number of inflorescences, and treatment predictor variables as well as the effect variable - number of inflorescences collected), also has a non normal distribution and contains significant deviation. Model object a, the generalized linear model with negative binomial distribution ad the same variables as model 5, also does not have a normal distribution and falls short of the expectation. After creating and checking the diagnostics for each model, it is important to then compare the models and choose the best suited object for the analysis at hand.... *Need help here:* The models were compared with the MuMIN::model.selection function and we can see that because of the *\_\_\_\_\_\_\_\_\_\_\_* values, model 3 is the best choice for this data frame. AFter selecting model 3, we found that the confidence interval was 97.5% and the significance level is therefore 2.5%. These values gave us the intercepts needed to graph the model object for our final data visualization, ??????? confused here!! Finally, we can see that..... *I honeslty dont know what the hypoetheses are and therfore idk what was proven here! help!*
+>>>>>>> 52f5e0268146755ca4a1f78096552110003c4aae
 
 ## Citations:
 
