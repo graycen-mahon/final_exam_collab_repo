@@ -161,39 +161,8 @@ visitation rates in shrub and open plots across Niwot Ridge, 2019 - 2021. ver 1.
 H0: Seed count is not predicted by plot type (shrub or control/open), plant species, and total number of inflorescence. There is no relationship between seed count and the predictor variables. 
 HA: Seed count may be predicted by plot type (shrub or control/open), plant species, and total number of inflorescence. There is a relationship between seed count and the predictor variables. 
 
-<<<<<<< HEAD
-Graph uses ggpredict to show predictions for linear model. Total_nr_infl is on the x axis against the count of nr_seeds on the y-axis. Treatments are seperated by color into control and shrub (orange and blue, respectively). Graphs are facet wrapped by species meaning they are split up by species type. Allows us to see how seed count varies with the multiple different variables. 
-
-**generalized linear models allow you to predict non continuous values
-**adjusted R2 values adjusts a linear model that has multiple independent variables.
- r2M and R2c are equivalent
- ***R2m (Marginal R-squared) shows the proportion of variance explained by the independent variables in the model ignore the RMc that is only for random effects
- **log normal, tridelta, and gamma are different ways of calculating the R2. the values for each suggest that lognormal explains a higher proportion of the variance in the response when compared to delta and trigamma (partially explained by GPT)
-
-linear regression: at each value of x (predictor), y (response)
-is normally distributed
-
-
-Null: Seed count is not predicted by plot type(shrub or open), plant species, and total
-number of inflorescence
-Alternative Hypothesis: Seed count may be predicted by plot type (shrub or open), plant species, and total
-number of inflorescence
-
-The null hypothesis for the generalized linear model is that seed count does not vary as a result of plot type, plant species, or total number of inflorescence. 
-
-The alternative hypothesisis that seed count varies due to at least one of the following variables: plot type, plant species, or total number of inflorescence.
-
-Adjusted R2 value
-
-null and hypothesis 
-○ Any cleaning and wrangling steps\
-○ Assumption checks\
-○ Statistical tests and null hypotheses\
-○ Citations for packages, software, data, or other steps
-=======
   Next, we made a missing data visualization, and captioned the plot accordingly, in order to view any missing data points from the frame. We found that there was missing data in the number of seeds, the number of inflorescences collected, the weight of seeds, and observational distance from the shrub. However, for the purpose of answering the questions “How does seed count vary with plot type (shrub or open), plant species, and total number of inflorescences? Is there a simpler model that explains seed count, and if so, what is it?”, we are only concerned with the missing values in the first two mentioned. We then created a ggpairs plot in order to graph the relationship between each variable using the seed data set which helps with data visualization and understanding. In order to properly analyze the data, we created multiple objects and used the pipe operator to narrow down the data table to the following variables of interest: species, treatment, number of seeds, number of inflorescences, and number of inflorescences collected. We then used the drop_na function to remove the missing values, leaving us with a cleaned data subset called “seed_col3”. Then, we made a secondary data visualization with the new sub-setted data in the form of a histogram. We can see that the frequency distribution is right skewed, with the majority of plots having 0 seeds (almost 150 plots) and very few having more than 50 seeds (only ~12 plots). To determine which variable had the largest effect on seed count, we made multiple linear and generalized linear models with the seed column data set. Generalized linear models, as opposed to a traditional linear model, allowed us to predict non-continuous values- which we experienced with some of our variables. Seed model 2 and 2a are both generalized linear models with a poisson distribution, containing the variables species, total number of inflorescences, and plot type (treatment). The second set of models are generalized linear models 3 and 3a with a negative binomial distribution. We then made models 4-4a and 5-5a with first a poisson distribution and the random effect and the second with a negative binomial distribution and the random effect. The random effect variable we chose to use was the number of inflorescences collected from each plant. 
   We then checked the residuals and ran diagnostics on each of the models (2, 3, 4, 5, and a) using the simulated residuals function and plotting it using the plot function. These show the QQ plot of the residuals and compare them against the predictor variables included in the models. After running diagnostics, we used the MuMin model select function to test the distributions of each model for validity and select the best suited model for the data set. The best suited model is the model that influences and best predicts the dependent variable in question, in this case the model we chose was model 3, and we viewed and summarized the model object before defining the confidence interval using the confint function in R. The adjusted R2 values found in the next code chunk is used to adjust a linear model that is showing multiple independent variables. The marginal R-squared shows the proportion of variances that are explained by the independent variables in the model. There are multiple ways of calculating R2; log normal, tridelta and gamma and the former better explains a higher proportion of variances in the response as compared to the latter two options; which is why it was used in this analysis. The final visualization for this analysis is in the form of a ggplot using ggpredict to show the linear model predictions. The x axis is total number of inflorescences while the y axis is number of seeds. Each treatment (shrub or control) is separated by color - orange and blue respectively. There are 5 plots, split into species to show us how seed count varies with the multiple variables. The points on the graph are seed count while the ribbon represents the maximum and minimum predictor values shows in the seed_predictor subset. 
->>>>>>> 01649962fd309b489bc69377407e4c30bdb4ee14
 
 ```{r}
 #packages for model
@@ -374,8 +343,6 @@ ggplot(seed_mod3, aes(x = total_nr_infl, y = nr_seeds, fill = treatment)) +
 #fill by treatment by type
   labs(fill = "treatment", color = "treatment")
 ```
-
-Graph uses ggpredict to show predictions for linear model. Total_nr_infl is on the x axis against the count of nr_seeds on the y-axis. Treatments are seperated by color into control and shrub (orange and blue, respectively). Graphs are facet wrapped by species meaning they are split up by species type. Allows us to see how seed count varies with the multiple different variables. 
 
 ## Results
 
