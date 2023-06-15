@@ -177,8 +177,11 @@ number of inflorescence
 Alternative Hypothesis: Seed count may be predicted by plot type (shrub or open), plant species, and total
 number of inflorescence
 
-Adjusted R2 value
+The null hypothesis for the generalized linear model is that seed count does not vary as a result of plot type, plant species, or total number of inflorescence. 
 
+The alternative hypothesisis that seed count varies due to at least one of the following variables: plot type, plant species, or total number of inflorescence.
+
+Adjusted R2 value
 
 null and hypothesis 
 ○ Any cleaning and wrangling steps\
