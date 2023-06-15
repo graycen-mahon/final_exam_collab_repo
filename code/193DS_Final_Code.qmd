@@ -38,7 +38,7 @@ The null hypothesis, in biological terms, is that there is not relationship in s
 
 4) Random Sampling: 10 active kangaroo mounds were randomly selected and 16 samples were collected per mound on the base of the mound and on the disturbed area surrounding the mound. 
 
-The Kruskal Wallis test does not test for homogeneity, so we ran a levene test using seeds as the dependent variable and mound location as the grouping variable. The significant p-value of 2.66e-09 indicates that there is no homogeneity of variances, but, since the Kruskal-Wallis test is non-parametric, it is less sensitive to violations of this assumption and can still be used. After running these two tests, we then measured the effect size of the data set which informs us the significance of the relationship between our variables on a numerical scale, and therefore how important and applicable it is to the “real world”. 
+To test for homogeneity of variances, we ran a levene test using seeds as the dependent variable and mound location as the grouping variable. The significant p-value of 2.66e-09 indicates that there is no homogeneity of variances, but, since the Kruskal-Wallis test is non-parametric, it is less sensitive to violations of this assumption and can still be used. After running these two tests, we then measured the effect size of the data set which informs us the significance of the relationship between our variables on a numerical scale, and therefore how important and applicable it is to the “real world”. 
 
 
 ```{r loading-in-packages1}
